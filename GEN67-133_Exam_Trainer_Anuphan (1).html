@@ -1,0 +1,958 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f6f5fb">
+<title>GEN67-133 Exam Trainer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f5fb; --surface:#ffffff; --surface2:#faf9fd;
+  --text:#17151d; --muted:#716e79; --line:#e7e3ec;
+  --accent:#6557d9; --accent2:#8c7bf4; --accentSoft:#f0edff;
+  --good:#147a55; --goodSoft:#ecf8f2; --bad:#b33b33; --badSoft:#fff0ef;
+  --warn:#9a6700; --warnSoft:#fff8e6; --shadow:0 14px 45px rgba(34,24,69,.07);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:
+  radial-gradient(circle at 10% 0%,rgba(140,123,244,.12),transparent 26rem),
+  radial-gradient(circle at 100% 10%,rgba(101,87,217,.08),transparent 30rem),
+  var(--bg);
+  color:var(--text);
+  font-family:"Anuphan","Noto Sans Thai","Segoe UI",Tahoma,sans-serif;
+}
+button,select,input{font:inherit}
+button{cursor:pointer}
+.shell{max-width:1120px;margin:0 auto;padding:20px 18px 70px}
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:6px 0 22px;position:sticky;top:0;z-index:30;
+  backdrop-filter:blur(16px);background:linear-gradient(to bottom,rgba(246,245,251,.94),rgba(246,245,251,.72),transparent);
+}
+.brand{display:flex;align-items:center;gap:11px;min-width:0}
+.mark{
+  width:38px;height:38px;border-radius:13px;display:grid;place-items:center;
+  color:white;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));
+  box-shadow:0 8px 20px rgba(101,87,217,.25)
+}
+.brandText{min-width:0}
+.brandText b{display:block;font-size:15px;white-space:nowrap}
+.brandText span{display:block;color:var(--muted);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topActions{display:flex;gap:8px}
+.iconBtn,.ghostBtn,.primaryBtn,.softBtn,.dangerBtn{
+  border:1px solid var(--line);border-radius:13px;padding:10px 13px;background:#fff;color:var(--text);
+  font-weight:600;transition:.18s ease;box-shadow:0 2px 8px rgba(0,0,0,.02)
+}
+.iconBtn:hover,.ghostBtn:hover{transform:translateY(-1px);border-color:#d9d3e3}
+.primaryBtn{background:var(--accent);color:#fff;border-color:var(--accent)}
+.primaryBtn:hover{background:#594cc4;transform:translateY(-1px)}
+.softBtn{background:var(--accentSoft);color:#4f43b8;border-color:#ddd7ff}
+.dangerBtn{background:#fff5f4;color:var(--bad);border-color:#f0cfcc}
+.hero{
+  background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(250,248,255,.96));
+  border:1px solid rgba(223,218,234,.95);border-radius:30px;padding:34px;
+  box-shadow:var(--shadow);overflow:hidden;position:relative
+}
+.hero:after{
+  content:"";position:absolute;width:260px;height:260px;border-radius:50%;
+  right:-95px;top:-110px;background:radial-gradient(circle,var(--accentSoft),transparent 68%)
+}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--accent);text-transform:uppercase}
+.hero h1{font-size:clamp(30px,5vw,52px);line-height:1.08;letter-spacing:-.045em;margin:10px 0 12px;max-width:750px}
+.hero p{margin:0;max-width:760px;color:var(--muted);line-height:1.72;font-size:15px}
+.examGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:26px}
+.examStat{border:1px solid var(--line);background:rgba(255,255,255,.78);border-radius:17px;padding:15px}
+.examStat b{font-size:20px;display:block}
+.examStat small{color:var(--muted);line-height:1.4}
+.sectionTitle{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:30px 2px 13px}
+.sectionTitle h2{font-size:20px;margin:0}
+.sectionTitle p{font-size:12px;color:var(--muted);margin:0}
+.modeGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.modeCard{
+  border:1px solid var(--line);background:var(--surface);border-radius:24px;padding:22px;
+  text-align:left;box-shadow:0 8px 28px rgba(35,26,62,.045);position:relative;overflow:hidden;
+  transition:.2s ease
+}
+.modeCard:hover{transform:translateY(-3px);box-shadow:0 15px 34px rgba(35,26,62,.075);border-color:#d9d1ef}
+.modeNo{width:34px;height:34px;border-radius:11px;background:var(--accentSoft);color:var(--accent);display:grid;place-items:center;font-weight:700;margin-bottom:18px}
+.modeCard h3{margin:0 0 8px;font-size:19px}
+.modeCard p{margin:0;color:var(--muted);font-size:13px;line-height:1.62}
+.modeMeta{display:flex;gap:7px;flex-wrap:wrap;margin-top:16px}
+.pill{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 9px;font-size:11px;color:var(--muted)}
+.view{display:none}.view.active{display:block}
+.panel{
+  background:var(--surface);border:1px solid var(--line);border-radius:26px;padding:24px;
+  box-shadow:var(--shadow)
+}
+.viewHeader{display:flex;align-items:start;justify-content:space-between;gap:16px;margin:2px 0 16px}
+.viewHeader h1{font-size:clamp(24px,4vw,34px);margin:2px 0 6px;letter-spacing:-.035em}
+.viewHeader p{color:var(--muted);font-size:13px;line-height:1.6;margin:0;max-width:720px}
+.controlRow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.select{border:1px solid var(--line);border-radius:13px;background:#fff;padding:10px 12px;color:var(--text);min-height:42px}
+.progressLine{height:7px;border-radius:999px;background:#eeebf1;overflow:hidden;margin:12px 0 20px}
+.progressLine>span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;transition:.25s}
+.kpiGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.kpi{border:1px solid var(--line);border-radius:16px;padding:11px 13px;background:var(--surface2)}
+.kpi b{display:block;font-size:17px}.kpi span{font-size:10.5px;color:var(--muted)}
+.qMeta{font-size:11px;color:var(--muted);font-weight:600}
+.prompt{
+  font-size:clamp(21px,3.2vw,31px);font-weight:700;line-height:1.5;
+  letter-spacing:-.02em;margin:8px 0 20px
+}
+.dualGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.choiceBlock{border:1px solid var(--line);border-radius:20px;padding:16px;background:#fdfcfe}
+.choiceBlock h3{font-size:13px;margin:0 0 10px}
+.choices{display:grid;gap:8px}
+.choice{
+  border:1px solid var(--line);border-radius:14px;background:#fff;padding:11px 12px;
+  display:flex;align-items:flex-start;gap:9px;text-align:left;width:100%;color:var(--text);
+  transition:.15s
+}
+.choice:hover{border-color:#d4cdef;background:#fbfaff}
+.choice .letter{width:25px;height:25px;flex:0 0 25px;border-radius:8px;background:#f1eff5;display:grid;place-items:center;font-size:11px;font-weight:700}
+.choice.selected{border-color:var(--accent);background:var(--accentSoft)}
+.choice.selected .letter{background:var(--accent);color:white}
+.choice.correct{border-color:#8bc6ad;background:var(--goodSoft)}
+.choice.correct .letter{background:var(--good);color:#fff}
+.choice.wrong{border-color:#e0a09a;background:var(--badSoft)}
+.choice.wrong .letter{background:var(--bad);color:#fff}
+.feedback{
+  margin-top:16px;border-radius:18px;padding:15px 16px;border:1px solid var(--line);
+  display:none;background:#fbfafc
+}
+.feedback.show{display:block}
+.feedback.good{border-color:#b4dcca;background:var(--goodSoft)}
+.feedback.bad{border-color:#edc2be;background:var(--badSoft)}
+.feedback h4{margin:0 0 5px;font-size:15px}
+.feedback p{margin:4px 0;color:#4f4b55;font-size:12.5px;line-height:1.55}
+.explainGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.explainItem{background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:12px;padding:10px}
+.explainItem b{font-size:12px}.explainItem span{display:block;color:var(--muted);font-size:11px;line-height:1.45;margin-top:3px}
+.navRow{display:flex;justify-content:space-between;gap:10px;margin-top:18px;flex-wrap:wrap}
+.navRight{display:flex;gap:8px;flex-wrap:wrap}
+.matchIntro{border:1px solid var(--line);border-radius:18px;padding:15px;background:var(--accentSoft);margin-bottom:14px}
+.matchIntro b{font-size:13px}.matchIntro p{font-size:11.5px;color:#5d5685;line-height:1.6;margin:5px 0 0}
+.matchSection{margin:0 0 18px;border:1px solid var(--line);border-radius:22px;overflow:hidden}
+.matchHead{padding:15px 16px;background:#faf9fd;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:8px;align-items:center}
+.matchHead h3{font-size:14px;margin:0}.matchHead span{font-size:10.5px;color:var(--muted)}
+.bank{display:flex;gap:6px;flex-wrap:wrap;padding:12px 14px;border-bottom:1px solid var(--line);background:#fff}
+.bankChip{font-size:10.5px;padding:6px 8px;border-radius:999px;background:#f5f3f8;border:1px solid #ebe7f0;color:#5c5862}
+.matchRows{padding:10px 14px 14px}
+.matchRow{display:grid;grid-template-columns:34px 1fr minmax(190px,280px);gap:10px;align-items:center;padding:11px 0;border-bottom:1px solid #f0edf3}
+.matchRow:last-child{border-bottom:0}
+.matchNum{width:30px;height:30px;border-radius:10px;background:#f1eff5;display:grid;place-items:center;font-size:11px;font-weight:700}
+.matchMeaning{font-size:12.5px;line-height:1.5}
+.matchSelect{width:100%;border:1px solid var(--line);border-radius:12px;padding:9px 10px;background:#fff;font-size:11.5px}
+.rowResult{grid-column:2/4;font-size:11.5px;line-height:1.55;border-radius:12px;padding:9px 10px;margin-top:-3px;display:none}
+.matchRow.checked .rowResult{display:block}
+.rowResult.good{background:var(--goodSoft);color:#376550}
+.rowResult.bad{background:var(--badSoft);color:#824642}
+.glossaryToggle{border:0;background:transparent;color:var(--accent);font-weight:600;padding:0;font-size:11px}
+.glossary{display:none;padding:0 14px 14px}.glossary.show{display:block}
+.glossaryGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}
+.glossaryItem{border:1px solid var(--line);border-radius:12px;padding:9px;background:#fff}
+.glossaryItem b{font-size:11px}.glossaryItem span{display:block;color:var(--muted);font-size:10.5px;line-height:1.45;margin-top:3px}
+.mockTabs{display:flex;gap:8px;margin-bottom:14px}
+.mockTab{flex:1;border:1px solid var(--line);border-radius:14px;background:#fff;padding:10px;font-weight:600;color:var(--muted)}
+.mockTab.active{background:var(--accentSoft);border-color:#dcd5ff;color:var(--accent)}
+.mockQ{border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:10px}
+.mockQ h4{font-size:13px;line-height:1.55;margin:0 0 10px}
+.mockOptions{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}
+.mockOption{border:1px solid var(--line);border-radius:11px;padding:9px 10px;background:#fff;text-align:left;font-size:11.5px}
+.mockOption.sel{border-color:var(--accent);background:var(--accentSoft)}
+.resultHero{text-align:center;padding:24px;border-radius:22px;background:linear-gradient(140deg,var(--accentSoft),#fff);border:1px solid #dfdaf8}
+.resultHero strong{font-size:44px;display:block;letter-spacing:-.05em}
+.resultHero span{color:var(--muted);font-size:12px}
+.reviewList{margin-top:15px;display:grid;gap:8px}
+.reviewItem{border:1px solid var(--line);border-radius:14px;padding:12px}
+.reviewItem b{font-size:12px}.reviewItem p{font-size:11px;color:var(--muted);line-height:1.5;margin:4px 0 0}
+
+.glossHero{
+  display:grid;grid-template-columns:1fr auto;gap:16px;align-items:end;
+  margin-bottom:14px
+}
+.glossControls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.searchBox{
+  min-width:min(360px,100%);border:1px solid var(--line);border-radius:13px;
+  background:#fff;padding:10px 12px;color:var(--text)
+}
+.tableWrap{
+  border:1px solid var(--line);border-radius:22px;overflow:auto;background:#fff;
+  box-shadow:0 8px 24px rgba(35,26,62,.035)
+}
+.vocabTable{width:100%;border-collapse:separate;border-spacing:0;min-width:860px}
+.vocabTable th{
+  position:sticky;top:0;z-index:3;background:#f4f1fb;color:#4e466b;
+  text-align:left;font-size:11.5px;padding:12px 14px;border-bottom:1px solid var(--line)
+}
+.vocabTable td{
+  padding:12px 14px;border-bottom:1px solid #f0edf3;vertical-align:top;
+  font-size:12px;line-height:1.58
+}
+.vocabTable tr:last-child td{border-bottom:0}
+.vocabTable tbody tr:nth-child(even){background:#fcfbfe}
+.vocabTable tbody tr:hover{background:#f8f6ff}
+.termTh{width:25%}.engTh{width:25%}.defTh{width:50%}
+.termCell b{font-size:12.5px}
+.termCell small{display:block;color:var(--muted);font-size:9.5px;margin-top:4px}
+.sourceBadge{
+  display:inline-flex;align-items:center;border-radius:999px;padding:4px 7px;
+  background:#f1eff7;color:#6a6472;border:1px solid #e7e3ec;font-size:9px;margin-left:5px
+}
+.glossStats{display:flex;gap:7px;flex-wrap:wrap;margin:9px 0 13px}
+.glossNote{
+  border:1px solid #ded8fb;background:#f4f1ff;color:#5a527c;border-radius:16px;
+  padding:12px 14px;font-size:11.5px;line-height:1.65;margin-bottom:14px
+}
+.glossEmpty{text-align:center;color:var(--muted);padding:38px 16px}
+.chapterStrip{
+  margin:20px 0 8px;font-size:13px;font-weight:700;color:#4d465b;
+  display:flex;align-items:center;gap:8px
+}
+.chapterStrip:after{content:"";height:1px;background:var(--line);flex:1}
+.mobileTermCards{display:none}
+.termCard{
+  border:1px solid var(--line);border-radius:17px;padding:14px;background:#fff;margin-bottom:8px
+}
+.termCard h3{font-size:13px;margin:0 0 4px}.termCard .eng{font-size:12px;color:var(--accent);font-weight:600}
+.termCard p{font-size:11.5px;line-height:1.6;color:#4f4b55;margin:8px 0 0}
+.termCard small{display:block;color:var(--muted);font-size:9.5px;margin-top:8px}
+.printTitle{display:none}
+@media(max-width:720px){
+  .glossHero{grid-template-columns:1fr}
+  .searchBox{width:100%;min-width:0}
+  .tableWrap{display:none}
+  .mobileTermCards{display:block}
+}
+@media print{
+  body{background:#fff}
+  .topbar,.viewHeader,.glossControls,.glossStats,.glossNote,.footerNote{display:none!important}
+  .shell{max-width:none;padding:0}
+  #glossaryView{display:block!important}
+  .panel{box-shadow:none;border:0;padding:0}
+  .printTitle{display:block;margin:0 0 12px}
+  .tableWrap{display:block!important;border:0;overflow:visible}
+  .vocabTable{min-width:0}
+  .vocabTable th{position:static;background:#efefef;color:#111}
+  .vocabTable td,.vocabTable th{font-size:9.5pt;padding:7px 8px}
+  .mobileTermCards{display:none!important}
+  .sourceBadge{display:none}
+}
+
+.modalBack{position:fixed;inset:0;background:rgba(24,20,33,.3);backdrop-filter:blur(8px);display:none;align-items:flex-end;justify-content:center;z-index:100;padding:16px}
+.modalBack.show{display:flex}
+.modal{width:min(760px,100%);max-height:86vh;overflow:auto;background:#fff;border-radius:26px;padding:22px;border:1px solid var(--line);box-shadow:0 24px 80px rgba(0,0,0,.2)}
+.modalTop{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.modalTop h2{font-size:18px;margin:0}
+.notice{font-size:11.5px;line-height:1.65;color:var(--muted);background:#faf9fd;border:1px solid var(--line);border-radius:14px;padding:12px;margin:12px 0}
+.footerNote{margin-top:24px;text-align:center;color:var(--muted);font-size:10.5px;line-height:1.6}
+.hidden{display:none!important}
+@media(max-width:1050px){.modeGrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:840px){
+  .modeGrid{grid-template-columns:1fr}.examGrid{grid-template-columns:repeat(2,1fr)}
+  .dualGrid{grid-template-columns:1fr}.explainGrid{grid-template-columns:1fr}
+  .kpiGrid{grid-template-columns:repeat(2,1fr)}
+  .matchRow{grid-template-columns:30px 1fr}.matchSelect{grid-column:2}.rowResult{grid-column:2}
+  .glossaryGrid{grid-template-columns:1fr}.mockOptions{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .shell{padding:12px 10px 55px}.hero{padding:24px 18px;border-radius:24px}
+  .panel{padding:16px;border-radius:22px}.topbar{padding-top:2px}
+  .brandText span{max-width:190px}.examGrid{gap:7px}.examStat{padding:11px}
+  .viewHeader{flex-direction:column}.topActions .ghostBtn{display:none}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="topbar">
+    <div class="brand" onclick="goHome()" role="button" tabindex="0">
+      <div class="mark">13</div>
+      <div class="brandText"><b>GEN67-133 Exam Trainer</b><span>ฝึกคำศัพท์ไทย–อังกฤษและจับคู่ตามโครงข้อสอบ</span></div>
+    </div>
+    <div class="topActions">
+      <button class="ghostBtn" onclick="openAbout()">ข้อมูลชุดฝึก</button>
+      <button class="iconBtn" onclick="goHome()">หน้าแรก</button>
+    </div>
+  </header>
+
+  <main id="home" class="view active">
+    <section class="hero">
+      <div class="eyebrow">Aesthetics for Quality of Life</div>
+      <h1>รู้ความหมายไทยแล้ว<br>ให้ภาษาอังกฤษไม่เป็นอุปสรรค</h1>
+      <p>ชุดฝึกนี้จัดคำจากเอกสารเตรียมสอบ GEN67-133 ให้ฝึกจาก “ความหมาย” ไปหา <b>คำไทย + คำอังกฤษ</b> พร้อมโหมดจับคู่ 20 ข้อตามโครงข้อสอบจริง และ Mock 40 ข้อสำหรับซ้อมก่อนสอบ</p>
+      <div class="examGrid">
+        <div class="examStat"><b>20 ข้อ</b><small>ตอนที่ 1 นิยามศัพท์<br>รวม 5 คะแนน</small></div>
+        <div class="examStat"><b>20 ข้อ</b><small>ตอนที่ 2 จับคู่<br>5 หมวด × 4 ข้อ</small></div>
+        <div class="examStat"><b>5 ภาพ</b><small>ตอนที่ 3 วิเคราะห์ภาพ<br>รวม 5 คะแนน</small></div>
+        <div class="examStat"><b>2 ข้อ</b><small>ตอนที่ 4 สร้างสรรค์<br>รวม 5 คะแนน</small></div>
+      </div>
+    </section>
+
+    <div class="sectionTitle">
+      <div><h2>เลือกโหมดฝึก</h2><p>เริ่มจากจำคำ แล้วขยับไปใกล้รูปแบบข้อสอบจริง</p></div>
+      <span class="pill">236 รายการคำศัพท์</span>
+    </div>
+    <section class="modeGrid">
+      <button class="modeCard" onclick="startVocab()">
+        <div class="modeNo">01</div>
+        <h3>ความหมาย → ไทย + อังกฤษ</h3>
+        <p>หนึ่งความหมาย สองคำตอบ เลือกคำไทย 1 ชุด และคำอังกฤษ 1 ชุด ถ้าผิดจะอธิบายความหมายของตัวเลือกทุกตัว</p>
+        <div class="modeMeta"><span class="pill">ฝึกทีละบทได้</span><span class="pill">ทวนข้อผิด</span><span class="pill">ตัวเลือกสลับ</span></div>
+      </button>
+      <button class="modeCard" onclick="startMatching()">
+        <div class="modeNo">02</div>
+        <h3>จับคู่แบบข้อสอบจริง</h3>
+        <p>20 ข้อ แบ่งเป็น 5 หมวด หมวดละ 4 ข้อ แต่ละหมวดมีคลังคำ 14–15 คำ และสลับคลังคำใหม่เมื่อสร้างชุดใหม่</p>
+        <div class="modeMeta"><span class="pill">20 ข้อ</span><span class="pill">5 หมวด</span><span class="pill">คลังคำ 14–15</span></div>
+      </button>
+      <button class="modeCard" onclick="startMock()">
+        <div class="modeNo">03</div>
+        <h3>Mock 40 ข้อ</h3>
+        <p>จำลองสองตอนแรกต่อเนื่อง: นิยามศัพท์ 20 ข้อ + จับคู่ 20 ข้อ ตรวจคะแนนตอนจบเพื่อซ้อมการตัดสินใจแบบไม่เห็นเฉลยทันที</p>
+        <div class="modeMeta"><span class="pill">40 ข้อ</span><span class="pill">10 คะแนน</span><span class="pill">ตรวจท้ายชุด</span></div>
+      </button>
+      <button class="modeCard" onclick="startGlossary()">
+        <div class="modeNo">04</div>
+        <h3>ตารางรวมศัพท์ฉบับเต็ม</h3>
+        <p>เติมตารางแบบอาจารย์ให้ครบ: คำศัพท์ไทย + คำอังกฤษ + นิยามเต็ม ค้นหา กรองรายบท พิมพ์ และส่งออก CSV ได้</p>
+        <div class="modeMeta"><span class="pill">236 รายการ</span><span class="pill">ค้นหาเร็ว</span><span class="pill">Print / CSV</span></div>
+      </button>
+    </section>
+
+    <div class="footerNote">ความคืบหน้าถูกเก็บเฉพาะในเบราว์เซอร์ของเครื่องที่เปิดไฟล์นี้ เพื่อนแต่ละคนจึงมีสถิติของตัวเอง</div>
+  </main>
+
+  <main id="vocabView" class="view">
+    <div class="viewHeader">
+      <div><div class="eyebrow">โหมด 01</div><h1>ความหมาย → ไทย + อังกฤษ</h1><p>เลือกทั้งสองฝั่งก่อนตรวจคำตอบ ตัวเลือกจะล็อกไว้ในข้อนั้น และสลับใหม่เมื่อกด “สุ่มชุดใหม่” หรือ “ลองข้อนี้ใหม่”</p></div>
+      <button class="ghostBtn" onclick="goHome()">ออกจากโหมด</button>
+    </div>
+    <section class="panel">
+      <div class="controlRow">
+        <select id="vChapter" class="select"></select>
+        <select id="vFilter" class="select">
+          <option value="all">ทุกข้อ</option>
+          <option value="wrong">เฉพาะข้อที่เคยผิด</option>
+          <option value="englishWrong">เฉพาะอังกฤษที่เคยผิด</option>
+        </select>
+        <button class="softBtn" onclick="shuffleVocabPool()">สุ่มชุดใหม่</button>
+        <button class="ghostBtn" onclick="resetVocabProgress()">ล้างสถิติ</button>
+      </div>
+      <div class="kpiGrid">
+        <div class="kpi"><b id="vPos">0/0</b><span>ข้อปัจจุบัน</span></div>
+        <div class="kpi"><b id="vBoth">0</b><span>ถูกทั้งไทย + อังกฤษ</span></div>
+        <div class="kpi"><b id="vThai">0</b><span>คำไทยถูก</span></div>
+        <div class="kpi"><b id="vEng">0</b><span>คำอังกฤษถูก</span></div>
+      </div>
+      <div class="progressLine"><span id="vBar"></span></div>
+      <div class="qMeta" id="vMeta"></div>
+      <div class="prompt" id="vPrompt"></div>
+      <div class="dualGrid">
+        <div class="choiceBlock"><h3>1) คำศัพท์ภาษาไทย</h3><div class="choices" id="vThaiChoices"></div></div>
+        <div class="choiceBlock"><h3>2) คำศัพท์ภาษาอังกฤษ</h3><div class="choices" id="vEngChoices"></div></div>
+      </div>
+      <div class="feedback" id="vFeedback"></div>
+      <div class="navRow">
+        <button class="ghostBtn" onclick="vPrev()">ย้อนกลับ</button>
+        <div class="navRight">
+          <button class="ghostBtn" id="vRetry" onclick="retryCurrentVocab()">ลองข้อนี้ใหม่</button>
+          <button class="primaryBtn" id="vCheck" onclick="checkVocab()">ตรวจคำตอบ</button>
+          <button class="softBtn" onclick="vNext()">ข้อต่อไป</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <main id="matchView" class="view">
+    <div class="viewHeader">
+      <div><div class="eyebrow">โหมด 02</div><h1>จับคู่ 20 ข้อ</h1><p>จำลองโครงสร้าง 5 หมวด × 4 ข้อ แต่ละหมวดมีคลังคำ 14–15 คำ ให้เลือกคำที่ตรงกับความหมายที่สุด</p></div>
+      <button class="ghostBtn" onclick="goHome()">ออกจากโหมด</button>
+    </div>
+    <section class="panel">
+      <div class="matchIntro"><b>วิธีทำ</b><p>อ่านความหมาย → เลือกคำจากคลังของหมวดนั้น ทำครบ 20 ข้อแล้วกดตรวจ ถ้าผิด ระบบจะบอกว่าคำที่เลือกหมายถึงอะไร เทียบกับคำตอบที่ถูก และเปิดดูความหมายคลังคำทั้งหมดได้</p></div>
+      <div class="controlRow">
+        <button class="primaryBtn" onclick="newMatchingSet()">สร้างชุดใหม่ 20 ข้อ</button>
+        <span class="pill" id="matchAnswered">ตอบแล้ว 0/20</span>
+      </div>
+      <div id="matchSections"></div>
+      <div class="navRow">
+        <button class="ghostBtn" onclick="goHome()">กลับหน้าแรก</button>
+        <div class="navRight"><button class="primaryBtn" onclick="checkMatching()">ตรวจทั้ง 20 ข้อ</button></div>
+      </div>
+      <div id="matchSummary"></div>
+    </section>
+  </main>
+
+  <main id="mockView" class="view">
+    <div class="viewHeader">
+      <div><div class="eyebrow">โหมด 03</div><h1>Mock Exam — 40 ข้อ</h1><p>ตอนที่ 1 จำนวน 20 ข้อ และตอนที่ 2 จำนวน 20 ข้อ รวมจำลอง 10 คะแนนแรกของข้อสอบจริง ไม่มีเฉลยระหว่างทำ</p></div>
+      <button class="ghostBtn" onclick="goHome()">ออกจากโหมด</button>
+    </div>
+    <section class="panel">
+      <div class="controlRow">
+        <button class="primaryBtn" onclick="newMock()">สร้าง Mock ใหม่</button>
+        <span class="pill" id="mockAnswered">ตอบแล้ว 0/40</span>
+      </div>
+      <div class="mockTabs">
+        <button id="tab1" class="mockTab active" onclick="showMockPart(1)">ตอนที่ 1 · นิยามศัพท์ 20 ข้อ</button>
+        <button id="tab2" class="mockTab" onclick="showMockPart(2)">ตอนที่ 2 · จับคู่ 20 ข้อ</button>
+      </div>
+      <div id="mockPart1"></div>
+      <div id="mockPart2" class="hidden"></div>
+      <div class="navRow">
+        <button class="ghostBtn" onclick="goHome()">กลับหน้าแรก</button>
+        <button class="primaryBtn" onclick="submitMock()">ส่งคำตอบและดูคะแนน</button>
+      </div>
+      <div id="mockResult"></div>
+    </section>
+  </main>
+</div>
+
+
+  <main id="glossaryView" class="view">
+    <div class="viewHeader">
+      <div>
+        <div class="eyebrow">โหมด 04</div>
+        <h1>ตารางรวมศัพท์ GEN67-133 ฉบับเต็ม</h1>
+        <p>รูปแบบเดียวกับตารางคำศัพท์ที่อาจารย์ให้: <b>ศัพท์ไทย · ความหมายภาษาอังกฤษ · นิยาม</b> แต่เติมช่องว่างให้ครบสำหรับอ่านทบทวนและแชร์กับเพื่อน</p>
+      </div>
+      <button class="ghostBtn" onclick="goHome()">ออกจากโหมด</button>
+    </div>
+
+    <section class="panel">
+      <div class="printTitle">
+        <h1 style="font-size:20pt;margin:0">GEN67-133 — ตารางรวมคำศัพท์ฉบับเต็ม</h1>
+        <p style="font-size:10pt;margin:4px 0 0">Aesthetics for Quality of Life</p>
+      </div>
+
+      <div class="glossNote">
+        <b>วิธีอ่านตารางนี้:</b> รายชื่อคำศัพท์ภาษาไทยยึดตามชีต “รวมคำศัพท์ช่วยอ่านเตรียมสอบ 133” ที่เว้นช่องภาษาอังกฤษและนิยามไว้
+        ส่วน <b>คำอังกฤษและนิยามที่ต้นฉบับไม่ได้กรอก</b> ถูกเติมเป็นคำมาตรฐานสำหรับใช้ทบทวนและฝึกจับคู่
+        จึงควรยึดสไลด์อาจารย์เป็นหลักหากมีถ้อยคำเฉพาะในชั้นเรียน
+      </div>
+
+      <div class="glossHero">
+        <div class="glossControls">
+          <input id="gSearch" class="searchBox" placeholder="ค้นหา: ไทย / English / ความหมาย..." oninput="renderGlossary()">
+          <select id="gChapter" class="select" onchange="renderGlossary()"></select>
+          <select id="gSort" class="select" onchange="renderGlossary()">
+            <option value="source">เรียงตามบทเรียน</option>
+            <option value="thai">เรียงคำไทย ก–ฮ</option>
+            <option value="eng">เรียง English A–Z</option>
+          </select>
+        </div>
+        <div class="glossControls">
+          <button class="softBtn" onclick="copyGlossary()">คัดลอกตาราง</button>
+          <button class="ghostBtn" onclick="exportGlossaryCSV()">ส่งออก CSV</button>
+          <button class="primaryBtn" onclick="window.print()">พิมพ์ / Save PDF</button>
+        </div>
+      </div>
+
+      <div class="glossStats">
+        <span class="pill" id="gCount">0 รายการ</span>
+        <span class="pill">5 บทเรียน</span>
+        <span class="pill">ไทย + อังกฤษ + นิยามเต็ม</span>
+      </div>
+
+      <div class="tableWrap">
+        <table class="vocabTable">
+          <thead>
+            <tr>
+              <th class="termTh">ศัพท์</th>
+              <th class="engTh">ความหมายภาษาอังกฤษ</th>
+              <th class="defTh">นิยาม</th>
+            </tr>
+          </thead>
+          <tbody id="gTableBody"></tbody>
+        </table>
+      </div>
+
+      <div id="gMobileCards" class="mobileTermCards"></div>
+      <div id="gEmpty" class="glossEmpty hidden">ไม่พบคำที่ค้นหา</div>
+    </section>
+  </main>
+
+<div id="aboutModal" class="modalBack" onclick="if(event.target===this)closeAbout()">
+  <div class="modal">
+    <div class="modalTop"><h2>ข้อมูลชุดฝึก</h2><button class="iconBtn" onclick="closeAbout()">ปิด</button></div>
+    <div class="notice"><b>ฐานข้อมูลคำศัพท์:</b> รายชื่อคำไทยจัดตามไฟล์ “รวมคำศัพท์ช่วยอ่านเตรียมสอบ 133” ทั้ง 5 บท และโครงข้อสอบยึดชีตติวที่ระบุ 20 + 20 + 5 + 2 ข้อ</div>
+    <div class="notice"><b>หมายเหตุเรื่องภาษาอังกฤษ:</b> ตารางคำศัพท์ต้นฉบับหลายรายการเว้นช่องคำอังกฤษ/นิยามไว้ ชุดฝึกนี้จึงใช้คำศัพท์อังกฤษมาตรฐานเพื่อช่วยจับคู่ก่อนสอบในรายการที่เอกสารไม่ได้ระบุโดยตรง ส่วนรายการที่ปรากฏในสไลด์ให้ยึดตามสไลด์เป็นหลัก</div>
+    <div class="notice"><b>การสุ่ม:</b> ตัวเลือกและคลังคำจะสลับเมื่อเริ่มชุดใหม่ แต่จะไม่เปลี่ยนตำแหน่งกลางข้อ เพื่อไม่ให้ผู้ทำสับสน</div>
+    <div class="notice"><b>ตารางรวมศัพท์:</b> โหมด 04 รวบรวมทุกคำในฐานข้อมูลเป็นตารางแบบเดียวกับชีตอาจารย์ พร้อมค้นหา กรอง พิมพ์ และส่งออก CSV</div>
+  </div>
+</div>
+
+<script>
+const DATA = [{"cat":"1. สุนทรียภาพ ความงาม และศิลปะ","th":"สุนทรียภาพ","en":"Aesthetic","meaning":"ความซาบซึ้งเมื่อรับรู้คุณค่าของสิ่งที่งาม ไพเราะ หรือรื่นรมย์","id":1},{"cat":"1. สุนทรียภาพ ความงาม และศิลปะ","th":"สุนทรียศาสตร์","en":"Aesthetics","meaning":"ศาสตร์ที่ศึกษาความงาม คุณค่าทางศิลปะ และความซาบซึ้ง","id":2},{"cat":"1. สุนทรียภาพ ความงาม และศิลปะ","th":"ความงาม","en":"Beauty","meaning":"คุณค่าที่ทำให้เกิดความพึงพอใจหรือความรู้สึกว่างาม","id":3},{"cat":"1. สุนทรียภาพ ความงาม และศิลปะ","th":"รสนิยม","en":"Taste","meaning":"ความชอบหรือความพึงพอใจส่วนบุคคลที่ต่างกันตามพื้นฐานและประสบการณ์","id":4},{"cat":"1. สุนทรียภาพ ความงาม และศิลปะ","th":"อัตวิสัย","en":"Subjectivism","meaning":"แนวคิดที่มองว่าผู้รับรู้เป็นผู้ตัดสินคุณค่าความงาม","id":5},{"cat":"1. สุนทรียภาพ ความงาม และศิลปะ","th":"วัตถุวิสัย","en":"Objectivism","meaning":"แนวคิดที่มองว่าคุณค่าความงามอยู่ในคุณสมบัติของวัตถุหรือผลงาน","id":6},{"cat":"1. สุนทรียภาพ ความงาม และศิลปะ","th":"สัมพัทธนิยม","en":"Relativism","meaning":"แนวคิดที่มองว่าความงามเกิดจากความสัมพันธ์ระหว่างผู้รับรู้กับสิ่งที่รับรู้","id":7},{"cat":"1. สุนทรียภาพ ความงาม และศิลปะ","th":"อัตราส่วนทองคำ","en":"Golden Ratio","meaning":"สัดส่วนที่ถูกมองว่างดงามและสมดุล พบในธรรมชาติ ศิลปะ และสถาปัตยกรรม","id":8},{"cat":"1. สุนทรียภาพ ความงาม และศิลปะ","th":"ศิลปะ","en":"Art","meaning":"ผลงานสร้างสรรค์ของมนุษย์ที่สื่อความคิด อารมณ์ ความรู้สึก หรือความงาม","id":9},{"cat":"1. สุนทรียภาพ ความงาม และศิลปะ","th":"การรับรู้","en":"Perception","meaning":"กระบวนการรับสิ่งเร้าผ่านประสาทสัมผัสแล้วตีความ","id":10},{"cat":"1. สุนทรียภาพ ความงาม และศิลปะ","th":"การรับรู้แบบตั้งใจ","en":"Intentional Perception","meaning":"การสนใจและตั้งใจรับรู้ความงามที่พบเห็นโดยตรง","id":11},{"cat":"1. สุนทรียภาพ ความงาม และศิลปะ","th":"การรับรู้แบบไม่ตั้งใจ","en":"Unintentional Perception","meaning":"การรับรู้ความงามที่พบเห็นโดยไม่ได้ตั้งใจ","id":12},{"cat":"1. สุนทรียภาพ ความงาม และศิลปะ","th":"การรับรู้แบบรสนิยม","en":"Taste-based Perception","meaning":"การรับรู้แล้วเลือกสิ่งที่ตนชอบและเห็นว่ามีคุณค่าต่อตน","id":13},{"cat":"1. สุนทรียภาพ ความงาม และศิลปะ","th":"ผัสสะ","en":"Sensation","meaning":"ความรู้สึกที่เกิดจากการกระตุ้นประสาทสัมผัส เช่น เห็น ได้ยิน สัมผัส","id":14},{"cat":"1. สุนทรียภาพ ความงาม และศิลปะ","th":"วิจิตรศิลป์","en":"Fine Arts","meaning":"ศิลปะที่มุ่งคุณค่าทางจิตใจ อารมณ์ และความงามเป็นสำคัญ","id":15},{"cat":"1. สุนทรียภาพ ความงาม และศิลปะ","th":"ประยุกต์ศิลป์","en":"Applied Arts","meaning":"ศิลปะที่นำความงามมาสัมพันธ์กับประโยชน์ใช้สอย","id":16},{"cat":"1. สุนทรียภาพ ความงาม และศิลปะ","th":"ศิลปะบำบัด","en":"Art Therapy","meaning":"การใช้กระบวนการทางศิลปะเพื่อช่วยดูแลหรือเยียวยาสุขภาวะ","id":17},{"cat":"1. สุนทรียภาพ ความงาม และศิลปะ","th":"ศิลปะเพื่อคุณภาพชีวิต","en":"Art for Quality of Life","meaning":"การใช้ศิลปะเพื่อส่งเสริมความสุข สุขภาวะ และคุณภาพชีวิต","id":18},{"cat":"1. สุนทรียภาพ ความงาม และศิลปะ","th":"คุณค่าด้านสังคม","en":"Social Value","meaning":"คุณค่าของศิลปะที่ช่วยเชื่อมโยง สื่อสาร หรือสะท้อนสังคม","id":19},{"cat":"1. สุนทรียภาพ ความงาม และศิลปะ","th":"คุณค่าด้านการศึกษา","en":"Educational Value","meaning":"คุณค่าของศิลปะที่ช่วยส่งเสริมการเรียนรู้ ความคิด และประสบการณ์","id":20},{"cat":"1. สุนทรียภาพ ความงาม และศิลปะ","th":"มาตรฐานความงาม","en":"Beauty Standard","meaning":"เกณฑ์หรือแบบแผนที่ใช้พิจารณาว่าสิ่งใดงามในบริบทหนึ่ง","id":21},{"cat":"2. ทัศนศิลป์","th":"ทัศนศิลป์","en":"Visual Arts","meaning":"ศิลปะที่รับรู้เป็นหลักผ่านการมองเห็น","id":22},{"cat":"2. ทัศนศิลป์","th":"ศิลปะสองมิติ","en":"Two-Dimensional Art","meaning":"งานศิลปะที่มีความกว้างและความยาวบนระนาบ","id":23},{"cat":"2. ทัศนศิลป์","th":"ศิลปะสามมิติ","en":"Three-Dimensional Art","meaning":"งานศิลปะที่มีความกว้าง ความยาว และความลึกหรือปริมาตร","id":24},{"cat":"2. ทัศนศิลป์","th":"จิตรกรรม","en":"Painting","meaning":"การสร้างภาพด้วยสี เส้น น้ำหนัก และวิธีระบายหรือป้ายบนพื้นระนาบ","id":25},{"cat":"2. ทัศนศิลป์","th":"ภาพวาด","en":"Drawing","meaning":"การสร้างภาพด้วยเส้น รอย และน้ำหนักจากวัสดุวาด","id":26},{"cat":"2. ทัศนศิลป์","th":"ภาพพิมพ์","en":"Printmaking","meaning":"งานภาพที่สร้างผ่านแม่พิมพ์หรือกระบวนการพิมพ์","id":27},{"cat":"2. ทัศนศิลป์","th":"ประติมากรรม","en":"Sculpture","meaning":"งานศิลปะสามมิติที่มีรูปทรงและปริมาตร","id":28},{"cat":"2. ทัศนศิลป์","th":"สถาปัตยกรรม","en":"Architecture","meaning":"ศิลปะและการออกแบบสิ่งก่อสร้างหรือพื้นที่ใช้สอย","id":29},{"cat":"2. ทัศนศิลป์","th":"ศิลปะดิจิทัล","en":"Digital Art","meaning":"งานศิลปะที่สร้างหรือประมวลผลด้วยเทคโนโลยีดิจิทัล","id":30},{"cat":"2. ทัศนศิลป์","th":"ศิลปะคอลลาจ","en":"Collage Art","meaning":"งานที่นำวัสดุหรือภาพหลายชิ้นมาตัดและปะรวมกัน","id":31},{"cat":"2. ทัศนศิลป์","th":"สื่อผสม","en":"Mixed Media","meaning":"งานที่ใช้วัสดุหรือเทคนิคมากกว่าหนึ่งชนิดร่วมกัน","id":32},{"cat":"2. ทัศนศิลป์","th":"ภาพถ่าย","en":"Photography","meaning":"การสร้างภาพด้วยกระบวนการบันทึกแสงด้วยกล้อง","id":33},{"cat":"2. ทัศนศิลป์","th":"งานออกแบบ","en":"Design","meaning":"การวางแผนและจัดองค์ประกอบเพื่อให้ตอบโจทย์ด้านหน้าที่และความงาม","id":34},{"cat":"2. ทัศนศิลป์","th":"ประยุกต์ศิลป์","en":"Applied Arts","meaning":"ศิลปะที่ผสานคุณค่าความงามกับการใช้งาน","id":35},{"cat":"2. ทัศนศิลป์","th":"วิจิตรศิลป์","en":"Fine Arts","meaning":"ศิลปะที่เน้นคุณค่าทางอารมณ์ จิตใจ และความงาม","id":36},{"cat":"2. ทัศนศิลป์","th":"ทัศนธาตุ","en":"Visual Elements","meaning":"ส่วนประกอบพื้นฐานที่ทำให้เรามองเห็นและรับรู้งานทัศนศิลป์","id":37},{"cat":"2. ทัศนศิลป์","th":"จุด","en":"Point","meaning":"หน่วยทางทัศนศิลป์ที่เล็กที่สุด ใช้กำหนดตำแหน่งหรือสร้างการเคลื่อนไหว","id":38},{"cat":"2. ทัศนศิลป์","th":"เส้น","en":"Line","meaning":"ร่องรอยที่เกิดจากจุดต่อเนื่องกัน ใช้บอกทิศทาง รูปร่าง และอารมณ์","id":39},{"cat":"2. ทัศนศิลป์","th":"เส้นตรง","en":"Straight Line","meaning":"เส้นที่ทอดไปในทิศทางเดียวโดยไม่โค้ง","id":40},{"cat":"2. ทัศนศิลป์","th":"เส้นโค้ง","en":"Curved Line","meaning":"เส้นที่เปลี่ยนทิศทางอย่างต่อเนื่องเป็นส่วนโค้ง","id":41},{"cat":"2. ทัศนศิลป์","th":"เส้นแนวตั้ง","en":"Vertical Line","meaning":"เส้นที่พุ่งขึ้นลงในแนวดิ่ง","id":42},{"cat":"2. ทัศนศิลป์","th":"เส้นแนวนอน","en":"Horizontal Line","meaning":"เส้นที่ทอดไปทางซ้ายขวาในแนวระดับ","id":43},{"cat":"2. ทัศนศิลป์","th":"เส้นทแยง","en":"Diagonal Line","meaning":"เส้นที่เอียงเฉียง มักให้ความรู้สึกเคลื่อนไหว","id":44},{"cat":"2. ทัศนศิลป์","th":"รูปร่าง","en":"Shape","meaning":"พื้นที่แบนสองมิติที่มีขอบเขต","id":45},{"cat":"2. ทัศนศิลป์","th":"รูปร่างเรขาคณิต","en":"Geometric Shape","meaning":"รูปร่างที่เป็นแบบคณิตศาสตร์ เช่น วงกลม สามเหลี่ยม สี่เหลี่ยม","id":46},{"cat":"2. ทัศนศิลป์","th":"รูปร่างอิสระ","en":"Organic Shape","meaning":"รูปร่างไม่ตายตัว คล้ายสิ่งที่พบในธรรมชาติ","id":47},{"cat":"2. ทัศนศิลป์","th":"รูปทรง","en":"Form","meaning":"ลักษณะที่มีสามมิติหรือให้ความรู้สึกถึงปริมาตร","id":48},{"cat":"2. ทัศนศิลป์","th":"รูปทรงเรขาคณิต","en":"Geometric Form","meaning":"รูปทรงสามมิติแบบเรขาคณิต เช่น ลูกบาศก์ ทรงกลม","id":49},{"cat":"2. ทัศนศิลป์","th":"รูปทรงอิสระ","en":"Organic Form","meaning":"รูปทรงสามมิติที่ไม่เป็นแบบเรขาคณิตตายตัว","id":50},{"cat":"2. ทัศนศิลป์","th":"น้ำหนักอ่อนแก่","en":"Tone","meaning":"ระดับความสว่างและความมืดของสีหรือภาพ","id":51},{"cat":"2. ทัศนศิลป์","th":"แสงและเงา","en":"Light and Shadow","meaning":"ความสัมพันธ์ระหว่างส่วนสว่างกับส่วนมืดที่ช่วยสร้างมิติ","id":52},{"cat":"2. ทัศนศิลป์","th":"สีโทนร้อน","en":"Warm Colors","meaning":"กลุ่มสีที่ให้ความรู้สึกร้อนแรง เช่น แดง ส้ม เหลือง","id":53},{"cat":"2. ทัศนศิลป์","th":"สีโทนเย็น","en":"Cool Colors","meaning":"กลุ่มสีที่ให้ความรู้สึกเย็นหรือสงบ เช่น น้ำเงิน เขียว ม่วง","id":54},{"cat":"2. ทัศนศิลป์","th":"พื้นผิว","en":"Texture","meaning":"ลักษณะผิวของสิ่งต่าง ๆ เช่น หยาบ เรียบ มัน ด้าน","id":55},{"cat":"2. ทัศนศิลป์","th":"พื้นที่ว่าง","en":"Space","meaning":"บริเวณว่างรอบ ระหว่าง หรือภายในรูปทรงและวัตถุ","id":56},{"cat":"2. ทัศนศิลป์","th":"เอกภาพ","en":"Unity","meaning":"การจัดส่วนต่าง ๆ ให้สัมพันธ์และรู้สึกเป็นหนึ่งเดียว","id":57},{"cat":"2. ทัศนศิลป์","th":"ความกลมกลืน","en":"Harmony","meaning":"การจัดองค์ประกอบให้เข้ากันอย่างต่อเนื่องและพอดี","id":58},{"cat":"2. ทัศนศิลป์","th":"ความสมดุล","en":"Balance","meaning":"การจัดน้ำหนักทางสายตาให้ภาพรู้สึกพอดีไม่เอนเอียง","id":59},{"cat":"2. ทัศนศิลป์","th":"ความสมดุลแบบสมมาตร","en":"Symmetrical Balance","meaning":"การจัดสองด้านให้มีลักษณะหรือค่าน้ำหนักใกล้เคียงกัน","id":60},{"cat":"2. ทัศนศิลป์","th":"ความสมดุลแบบอสมมาตร","en":"Asymmetrical Balance","meaning":"สองด้านไม่เหมือนกันแต่มีน้ำหนักทางสายตาสมดุลกัน","id":61},{"cat":"2. ทัศนศิลป์","th":"จังหวะทางศิลปะ","en":"Rhythm","meaning":"การจัดซ้ำหรือเคลื่อนต่อเนื่องขององค์ประกอบให้เกิดจังหวะสายตา","id":62},{"cat":"2. ทัศนศิลป์","th":"การซ้ำ","en":"Repetition","meaning":"การนำองค์ประกอบเดิมกลับมาใช้หลายครั้ง","id":63},{"cat":"2. ทัศนศิลป์","th":"รูปแบบซ้ำ","en":"Pattern","meaning":"การซ้ำองค์ประกอบอย่างมีแบบแผน","id":64},{"cat":"2. ทัศนศิลป์","th":"ความเคลื่อนไหว","en":"Movement","meaning":"การจัดองค์ประกอบให้สายตารู้สึกหรือเคลื่อนไปตามภาพ","id":65},{"cat":"2. ทัศนศิลป์","th":"จุดเด่น","en":"Dominance","meaning":"ส่วนที่เด่นที่สุดและดึงสายตาก่อนส่วนอื่น","id":66},{"cat":"2. ทัศนศิลป์","th":"ความขัดแย้ง","en":"Contrast","meaning":"การใช้ความแตกต่างเพื่อสร้างความเด่นและความสนใจ","id":67},{"cat":"2. ทัศนศิลป์","th":"ความหลากหลาย","en":"Variety","meaning":"การใช้ความแตกต่างหลายแบบเพื่อไม่ให้งานจำเจ","id":68},{"cat":"2. ทัศนศิลป์","th":"สัดส่วน","en":"Proportion","meaning":"ความสัมพันธ์ของขนาดระหว่างส่วนต่าง ๆ","id":69},{"cat":"2. ทัศนศิลป์","th":"ขนาด","en":"Size","meaning":"ความใหญ่หรือเล็กของสิ่งที่ปรากฏ","id":70},{"cat":"2. ทัศนศิลป์","th":"การจัดวาง","en":"Arrangement","meaning":"การกำหนดตำแหน่งขององค์ประกอบต่าง ๆ ในพื้นที่","id":71},{"cat":"2. ทัศนศิลป์","th":"องค์ประกอบภาพ","en":"Composition","meaning":"การจัดส่วนต่าง ๆ ของภาพให้สื่อสารและทำงานร่วมกัน","id":72},{"cat":"2. ทัศนศิลป์","th":"ภาพพิมพ์แกะไม้","en":"Woodcut","meaning":"ภาพพิมพ์ที่ใช้ไม้แกะเป็นแม่พิมพ์","id":73},{"cat":"2. ทัศนศิลป์","th":"ภาพพิมพ์ตะแกรงไหม","en":"Screen Printing","meaning":"ภาพพิมพ์ที่ใช้ตะแกรงเป็นตัวถ่ายทอดหมึกลงพื้นผิว","id":74},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"การเล่าเรื่อง","en":"Storytelling","meaning":"กระบวนการนำเรื่องหรือเหตุการณ์มาถ่ายทอดให้ผู้รับเข้าใจ","id":75},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"เรื่องเล่า","en":"Story","meaning":"เนื้อเรื่องหรือเหตุการณ์ที่ถูกนำมาเล่า","id":76},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"องค์ประกอบการเล่าเรื่อง","en":"Elements of Storytelling","meaning":"ส่วนสำคัญที่ร่วมกันสร้างเรื่อง เช่น โครงเรื่อง ตัวละคร ฉาก และความขัดแย้ง","id":77},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"โครงเรื่อง","en":"Plot","meaning":"ลำดับและความเชื่อมโยงของเหตุการณ์ในเรื่อง","id":78},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"แก่นเรื่อง","en":"Theme","meaning":"แนวคิดหรือสารหลักที่เรื่องต้องการสื่อ","id":79},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ตัวละคร","en":"Character","meaning":"บุคคลหรือสิ่งที่มีบทบาทในเรื่อง","id":80},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ตัวละครคงที่","en":"Static Character","meaning":"ตัวละครที่แทบไม่เปลี่ยนแปลงด้านความคิดหรือพฤติกรรมตลอดเรื่อง","id":81},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ตัวละครพลวัต","en":"Dynamic Character","meaning":"ตัวละครที่เกิดการเปลี่ยนแปลงสำคัญจากเหตุการณ์ในเรื่อง","id":82},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ฉาก","en":"Setting","meaning":"สภาพแวดล้อมที่เหตุการณ์ในเรื่องเกิดขึ้น","id":83},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"เวลา","en":"Time","meaning":"ช่วงเวลาหรือยุคสมัยที่เรื่องเกิดขึ้น","id":84},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"สถานที่","en":"Place","meaning":"พื้นที่หรือสถานที่ที่เหตุการณ์เกิดขึ้น","id":85},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ความขัดแย้ง","en":"Conflict","meaning":"ปัญหาหรือแรงปะทะที่ขับเคลื่อนเรื่อง","id":86},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ความขัดแย้งระหว่างตัวละครกับตัวละคร","en":"Character vs Character","meaning":"ความขัดแย้งระหว่างตัวละครสองฝ่าย","id":87},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ตัวละครกับตนเอง","en":"Character vs Self","meaning":"ความขัดแย้งภายในใจ ความคิด หรือการตัดสินใจของตัวละคร","id":88},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ตัวละครกับสังคม","en":"Character vs Society","meaning":"ความขัดแย้งระหว่างตัวละครกับค่านิยม กฎ หรือระบบของสังคม","id":89},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ตัวละครกับธรรมชาติ","en":"Character vs Nature","meaning":"ความขัดแย้งระหว่างตัวละครกับพลังหรือสภาพธรรมชาติ","id":90},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ตัวละครกับเหนือธรรมชาติ","en":"Character vs Supernatural","meaning":"ความขัดแย้งระหว่างตัวละครกับสิ่งลี้ลับหรือเหนือธรรมชาติ","id":91},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"มุมมองการเล่าเรื่อง","en":"Point of View","meaning":"ตำแหน่งหรือมุมที่ผู้เล่าใช้ถ่ายทอดเรื่อง","id":92},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ผู้เล่าเรื่อง","en":"Narrator","meaning":"ผู้ทำหน้าที่ถ่ายทอดเหตุการณ์และข้อมูลของเรื่อง","id":93},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"บุรุษที่หนึ่ง","en":"First-person Point of View","meaning":"การเล่าที่ผู้เล่าเป็นส่วนหนึ่งของเรื่อง มักใช้คำว่า ฉัน หรือ ผม","id":94},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"บุรุษที่สาม","en":"Third-person Point of View","meaning":"การเล่าที่กล่าวถึงตัวละครด้วย เขา เธอ หรือชื่อ โดยผู้เล่าอยู่นอกเรื่อง","id":95},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"การเปิดเรื่อง","en":"Opening","meaning":"ส่วนเริ่มต้นที่แนะนำเรื่อง บรรยากาศ ตัวละคร หรือสถานการณ์","id":96},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"เหตุการณ์ก่อเรื่อง","en":"Inciting Incident","meaning":"เหตุการณ์สำคัญที่ทำให้เรื่องเริ่มขับเคลื่อนหรือเกิดปัญหา","id":97},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"การดำเนินเรื่อง","en":"Rising Action","meaning":"ช่วงที่เหตุการณ์และความขัดแย้งค่อย ๆ พัฒนาและเข้มข้นขึ้น","id":98},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"จุดวิกฤต","en":"Climax","meaning":"ช่วงที่ความขัดแย้งหรือเหตุการณ์สำคัญถึงจุดเข้มข้นสูงสุด","id":99},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"การคลี่คลาย","en":"Resolution","meaning":"ช่วงที่ปัญหาหรือความขัดแย้งได้รับการคลี่คลาย","id":100},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"จบเรื่อง","en":"Ending","meaning":"ส่วนสุดท้ายที่ปิดหรือสรุปเรื่อง","id":101},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"สื่อจินตคดี","en":"Imaginative Media","meaning":"สื่อที่ใช้การสร้างสรรค์ จินตนาการ และเรื่องสมมติเป็นสำคัญ","id":102},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"สื่อบนจอ","en":"Screen Media","meaning":"สื่อที่รับชมผ่านจอ เช่น ภาพยนตร์ โทรทัศน์ หรือแพลตฟอร์มดิจิทัล","id":103},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"โสตทัศนศิลป์","en":"Audiovisual Art","meaning":"งานที่สื่อสารด้วยทั้งภาพและเสียง","id":104},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"สื่อดิจิทัล","en":"Digital Media","meaning":"สื่อที่สร้าง จัดเก็บ หรือเผยแพร่ด้วยเทคโนโลยีดิจิทัล","id":105},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"สตรีมมิง","en":"Streaming","meaning":"การส่งและรับเนื้อหาสื่อผ่านอินเทอร์เน็ตแบบต่อเนื่อง","id":106},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ภาพยนตร์","en":"Film","meaning":"สื่อภาพเคลื่อนไหวที่เล่าเรื่องหรือสื่อสารความหมาย","id":107},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ศิลปะภาพยนตร์","en":"Film Art","meaning":"การใช้ภาษาและองค์ประกอบของภาพยนตร์เพื่อสร้างคุณค่าทางศิลปะ","id":108},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ภาพยนตร์บันเทิงคดี","en":"Fiction Film","meaning":"ภาพยนตร์ที่ใช้เรื่องสมมติหรือการแต่งเรื่อง","id":109},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ภาพยนตร์สารคดี","en":"Documentary Film","meaning":"ภาพยนตร์ที่มุ่งนำเสนอข้อเท็จจริง บุคคล หรือเหตุการณ์จริง","id":110},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ละครซีรีส์","en":"Series","meaning":"เรื่องเล่าภาพและเสียงที่แบ่งเป็นหลายตอนต่อเนื่องกัน","id":111},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"โรแมนซ์","en":"Romance","meaning":"แนวเรื่องที่มุ่งความสัมพันธ์และความรัก","id":112},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"เมโลดราม่า","en":"Melodrama","meaning":"เรื่องที่เน้นอารมณ์เข้มข้น เหตุการณ์เร้าใจ และความขัดแย้งชัด","id":113},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"โครงสร้างกึ่งละคร","en":"Semi-dramatic Structure","meaning":"โครงสร้างการนำเสนอที่มีลักษณะบางส่วนคล้ายละครแต่ไม่ใช่ละครเต็มรูปแบบ","id":114},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ศิลปะการแสดง","en":"Performing Arts","meaning":"ศิลปะที่เกิดจากการแสดงต่อหน้าผู้ชม เช่น ละคร ดนตรี หรือนาฏศิลป์","id":115},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ละครเวที","en":"Theatre","meaning":"การแสดงเรื่องราวสดบนเวทีต่อหน้าผู้ชม","id":116},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"บทสนทนา","en":"Dialogue","meaning":"ถ้อยคำที่ตัวละครพูดโต้ตอบกัน","id":117},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"การจัดองค์ประกอบภาพ","en":"Composition","meaning":"การจัดสิ่งต่าง ๆ ภายในกรอบภาพเพื่อสื่อความหมาย","id":118},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"มุมกล้อง","en":"Camera Angle","meaning":"ตำแหน่งหรือระดับที่กล้องมองไปยังตัวแบบ","id":119},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ขนาดภาพ","en":"Shot Size","meaning":"ระยะใกล้ไกลของกรอบภาพที่กำหนดว่าผู้ชมเห็นตัวแบบมากน้อยเพียงใด","id":120},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ภาพระยะไกลมาก","en":"Extreme Long Shot","meaning":"ภาพที่เห็นพื้นที่หรือบริบทกว้างมาก ตัวแบบมีขนาดเล็ก","id":121},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ภาพระยะไกล","en":"Long Shot","meaning":"ภาพที่เห็นตัวแบบเต็มตัวพร้อมบริบทโดยรอบ","id":122},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ภาพระยะปานกลาง","en":"Medium Shot","meaning":"ภาพที่เห็นตัวแบบในระยะกลาง เน้นทั้งบุคคลและการกระทำ","id":123},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ภาพระยะใกล้","en":"Close-up","meaning":"ภาพที่เน้นใบหน้าหรือรายละเอียดของตัวแบบอย่างใกล้","id":124},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ภาพระยะใกล้มาก","en":"Extreme Close-up","meaning":"ภาพที่ขยายรายละเอียดเล็ก ๆ ของตัวแบบอย่างมาก","id":125},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"มุมระดับสายตา","en":"Eye-level Angle","meaning":"มุมกล้องที่อยู่ใกล้ระดับสายตาของตัวแบบ","id":126},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"มุมสูง","en":"High Angle","meaning":"มุมกล้องที่มองตัวแบบจากด้านบนลงมา","id":127},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"มุมต่ำ","en":"Low Angle","meaning":"มุมกล้องที่มองตัวแบบจากด้านล่างขึ้นไป","id":128},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"มุมเหนือศีรษะ","en":"Overhead Angle","meaning":"มุมกล้องที่มองลงจากด้านบนเกือบตั้งฉาก","id":129},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"การเคลื่อนกล้อง","en":"Camera Movement","meaning":"การเปลี่ยนตำแหน่งหรือทิศทางกล้องระหว่างถ่าย","id":130},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"แพน","en":"Pan","meaning":"การหมุนกล้องในแนวนอนซ้ายหรือขวาจากจุดเดิม","id":131},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ทิลต์","en":"Tilt","meaning":"การหมุนกล้องขึ้นหรือลงในแนวตั้งจากจุดเดิม","id":132},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ดอลลี่","en":"Dolly","meaning":"การเคลื่อนกล้องทั้งตัวเข้าใกล้หรือถอยห่างจากตัวแบบ","id":133},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"แทร็กกิง","en":"Tracking","meaning":"การเคลื่อนกล้องตามตัวแบบหรือไปตามเส้นทาง","id":134},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"มีซองแซน","en":"Mise-en-scène","meaning":"การจัดทุกสิ่งที่ปรากฏในฉาก เช่น นักแสดง แสง ฉาก เสื้อผ้า และตำแหน่ง","id":135},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ศฤงคารรส","en":"Shringara Rasa","meaning":"รสแห่งความรัก ความงาม ความดึงดูด และความโรแมนติก","id":136},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"หาสยรส","en":"Hasya Rasa","meaning":"รสแห่งความขบขัน สนุกสนาน และเสียงหัวเราะ","id":137},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"กรุณารส","en":"Karuna Rasa","meaning":"รสแห่งความสงสาร เห็นใจ และความเศร้า","id":138},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"รุทรรส","en":"Raudra Rasa","meaning":"รสแห่งความโกรธ เดือดดาล หรือเกรี้ยวกราด","id":139},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"วีรรส","en":"Vira Rasa","meaning":"รสแห่งความกล้าหาญ ความฮึกเหิม และวีรกรรม","id":140},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ภยานกรส","en":"Bhayanaka Rasa","meaning":"รสแห่งความกลัว หวาดหวั่น และน่าสะพรึง","id":141},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"พีภัตสรส","en":"Bibhatsa Rasa","meaning":"รสแห่งความรังเกียจ ขยะแขยง หรือไม่พึงใจ","id":142},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"อัพภูตรส","en":"Adbhuta Rasa","meaning":"รสแห่งความอัศจรรย์ ประหลาดใจ และพิศวง","id":143},{"cat":"3. การเล่าเรื่อง สื่อ ภาพยนตร์ และละคร","th":"ศานติรส","en":"Shanta Rasa","meaning":"รสแห่งความสงบ ผ่อนคลาย และสันติ","id":144},{"cat":"4. ดนตรี","th":"ดนตรี","en":"Music","meaning":"ศิลปะของเสียงที่จัดระเบียบเพื่อสื่ออารมณ์ ความคิด หรือความหมาย","id":145},{"cat":"4. ดนตรี","th":"เสียง","en":"Sound","meaning":"การสั่นสะเทือนที่เดินทางผ่านตัวกลางและมนุษย์สามารถรับรู้ได้","id":146},{"cat":"4. ดนตรี","th":"เสียงรบกวน","en":"Noise","meaning":"เสียงที่ไม่พึงประสงค์หรือรบกวนการได้ยิน","id":147},{"cat":"4. ดนตรี","th":"คลื่นเสียง","en":"Sound Wave","meaning":"คลื่นกลที่เกิดจากการสั่นสะเทือนของแหล่งกำเนิดเสียง","id":148},{"cat":"4. ดนตรี","th":"ความถี่","en":"Frequency","meaning":"จำนวนรอบการสั่นต่อหน่วยเวลา ซึ่งสัมพันธ์กับระดับเสียงสูงต่ำ","id":149},{"cat":"4. ดนตรี","th":"ระดับเสียง","en":"Pitch","meaning":"ระดับสูงหรือต่ำของเสียงที่สัมพันธ์กับความถี่","id":150},{"cat":"4. ดนตรี","th":"เสียงสูง","en":"High Pitch","meaning":"เสียงที่มีความถี่สูงและได้ยินเป็นเสียงสูง","id":151},{"cat":"4. ดนตรี","th":"เสียงต่ำ","en":"Low Pitch","meaning":"เสียงที่มีความถี่ต่ำและได้ยินเป็นเสียงต่ำ","id":152},{"cat":"4. ดนตรี","th":"ความดังเบา","en":"Dynamics","meaning":"ระดับความดังหรือเบาของเสียง","id":153},{"cat":"4. ดนตรี","th":"ความยาวเสียง","en":"Duration","meaning":"ระยะเวลาที่เสียงหนึ่งคงอยู่ สั้นหรือยาว","id":154},{"cat":"4. ดนตรี","th":"สีสันของเสียง","en":"Timbre","meaning":"คุณลักษณะเฉพาะที่ทำให้แหล่งกำเนิดเสียงต่างชนิดฟังต่างกัน","id":155},{"cat":"4. ดนตรี","th":"องค์ประกอบดนตรี","en":"Elements of Music","meaning":"ส่วนสำคัญที่ประกอบเป็นดนตรี เช่น จังหวะ ทำนอง เสียงประสาน และรูปแบบ","id":156},{"cat":"4. ดนตรี","th":"จังหวะ","en":"Rhythm","meaning":"การจัดเสียงและความเงียบให้สัมพันธ์กับเวลาอย่างเป็นแบบแผน","id":157},{"cat":"4. ดนตรี","th":"จังหวะ","en":"Beat","meaning":"ชีพจรหรือจังหวะพื้นฐานที่สม่ำเสมอของดนตรี","id":158},{"cat":"4. ดนตรี","th":"จังหวะเน้น","en":"Accented Beat","meaning":"จังหวะที่ได้รับน้ำหนักหรือการเน้นมากกว่าจังหวะอื่น","id":159},{"cat":"4. ดนตรี","th":"ทำนอง","en":"Melody","meaning":"การเรียงเสียงสูงต่ำและสั้นยาวต่อเนื่องจนเกิดแนวเพลง","id":160},{"cat":"4. ดนตรี","th":"เสียงประสาน","en":"Harmony","meaning":"เสียงตั้งแต่สองเสียงขึ้นไปที่เกิดพร้อมกันและสัมพันธ์กับทำนอง","id":161},{"cat":"4. ดนตรี","th":"คอร์ด","en":"Chord","meaning":"กลุ่มเสียงหลายระดับที่บรรเลงพร้อมกัน","id":162},{"cat":"4. ดนตรี","th":"พื้นผิวดนตรี","en":"Texture","meaning":"ลักษณะความสัมพันธ์ระหว่างแนวทำนองและเสียงประสาน","id":163},{"cat":"4. ดนตรี","th":"คีตลักษณ์","en":"Form","meaning":"โครงสร้างและการจัดท่อนของบทเพลง","id":164},{"cat":"4. ดนตรี","th":"โซนาตา","en":"Sonata","meaning":"รูปแบบหรือบทประพันธ์ดนตรีที่มักเขียนสำหรับเครื่องดนตรีเดี่ยวหรือกลุ่มเล็ก","id":165},{"cat":"4. ดนตรี","th":"ดนตรีบรรเลง","en":"Instrumental Music","meaning":"ดนตรีที่เน้นเสียงเครื่องดนตรีโดยไม่มีการร้องเป็นหลัก","id":166},{"cat":"4. ดนตรี","th":"ดนตรีขับร้อง","en":"Vocal Music","meaning":"ดนตรีที่ใช้เสียงร้องเป็นองค์ประกอบสำคัญ","id":167},{"cat":"4. ดนตรี","th":"ดนตรีสำหรับวงออร์เคสตรา","en":"Orchestral Music","meaning":"ดนตรีที่ประพันธ์หรือเรียบเรียงสำหรับวงออร์เคสตรา","id":168},{"cat":"4. ดนตรี","th":"วงออร์เคสตรา","en":"Orchestra","meaning":"วงขนาดใหญ่ที่รวมเครื่องสาย เครื่องลม และเครื่องกระทบ","id":169},{"cat":"4. ดนตรี","th":"วงเครื่องสาย","en":"String Ensemble","meaning":"วงที่ใช้เครื่องดนตรีตระกูลสายเป็นหลัก","id":170},{"cat":"4. ดนตรี","th":"วงดุริยางค์","en":"Band","meaning":"วงดนตรีที่รวมเครื่องดนตรีหลายชนิด โดยมากใช้เครื่องลมและเครื่องกระทบ","id":171},{"cat":"4. ดนตรี","th":"ซิมโฟนี","en":"Symphony","meaning":"บทประพันธ์ขนาดใหญ่สำหรับวงออร์เคสตรา มักมีหลายท่อน","id":172},{"cat":"4. ดนตรี","th":"คอนแชร์โต","en":"Concerto","meaning":"บทประพันธ์ที่เน้นเครื่องเดี่ยวหรือกลุ่มเดี่ยวประชันกับวง","id":173},{"cat":"4. ดนตรี","th":"สตริงควอเท็ต","en":"String Quartet","meaning":"วงหรือบทประพันธ์สำหรับเครื่องสาย 4 ชิ้น","id":174},{"cat":"4. ดนตรี","th":"โอเปรา","en":"Opera","meaning":"ละครที่เล่าเรื่องผ่านการขับร้องร่วมกับดนตรีและการแสดง","id":175},{"cat":"4. ดนตรี","th":"ดนตรีตะวันตก","en":"Western Music","meaning":"ดนตรีที่พัฒนาตามประวัติศาสตร์และระบบดนตรีของโลกตะวันตก","id":176},{"cat":"4. ดนตรี","th":"ดนตรียุคกลาง","en":"Medieval Music","meaning":"ดนตรีตะวันตกในยุคกลาง ก่อนยุคเรอเนซองส์","id":177},{"cat":"4. ดนตรี","th":"ดนตรียุคบาโรก","en":"Baroque Music","meaning":"ดนตรียุคประมาณ ค.ศ. 1600–1750 ที่มีการประดับและเสียงประสานเด่น","id":178},{"cat":"4. ดนตรี","th":"ดนตรียุคคลาสสิก","en":"Classical Music","meaning":"ดนตรียุคประมาณ ค.ศ. 1750–1820 ที่เน้นความชัดเจน สมดุล และรูปแบบ","id":179},{"cat":"4. ดนตรี","th":"ดนตรียุคโรแมนติก","en":"Romantic Music","meaning":"ดนตรียุคประมาณ ค.ศ. 1820–1900 ที่เน้นอารมณ์และการแสดงออก","id":180},{"cat":"4. ดนตรี","th":"ดนตรีศตวรรษที่ 20","en":"20th-Century Music","meaning":"ดนตรีที่เกิดในศตวรรษที่ 20 และมีการทดลองแนวคิดและเสียงใหม่ ๆ","id":181},{"cat":"4. ดนตรี","th":"เพลงโบสถ์","en":"Church Music","meaning":"ดนตรีที่ใช้ในบริบทพิธีกรรมหรือศาสนาคริสต์","id":182},{"cat":"4. ดนตรี","th":"ดิสโก้","en":"Disco","meaning":"ดนตรีเต้นรำที่มีจังหวะสม่ำเสมอเด่นชัดและนิยมในยุค 1970s","id":183},{"cat":"4. ดนตรี","th":"ร็อกแอนด์โรล","en":"Rock and Roll","meaning":"แนวดนตรีจังหวะหนักที่พัฒนาจากบลูส์และริทึมแอนด์บลูส์","id":184},{"cat":"4. ดนตรี","th":"แจ๊ส","en":"Jazz","meaning":"ดนตรีที่เด่นด้านการด้นสด จังหวะสวิง และเสียงประสานเฉพาะตัว","id":185},{"cat":"4. ดนตรี","th":"บลูส์","en":"Blues","meaning":"แนวดนตรีที่มีรูปแบบและอารมณ์เฉพาะ เป็นรากสำคัญของดนตรีสมัยนิยมหลายแนว","id":186},{"cat":"4. ดนตรี","th":"ป๊อป","en":"Pop","meaning":"ดนตรีสมัยนิยมที่มุ่งเข้าถึงผู้ฟังวงกว้าง","id":187},{"cat":"4. ดนตรี","th":"ภูมิทัศน์เสียง","en":"Soundscape","meaning":"ภาพรวมของเสียงทั้งหมดที่ประกอบกันอยู่ในสภาพแวดล้อมหนึ่ง","id":188},{"cat":"4. ดนตรี","th":"เสียงธรรมชาติ","en":"Natural Sound","meaning":"เสียงที่เกิดจากธรรมชาติ เช่น ลม ฝน นก หรือคลื่น","id":189},{"cat":"4. ดนตรี","th":"เสียงสิ่งแวดล้อม","en":"Environmental Sound","meaning":"เสียงต่าง ๆ ที่อยู่ในสภาพแวดล้อมรอบตัว","id":190},{"cat":"4. ดนตรี","th":"ดนตรีบำบัด","en":"Music Therapy","meaning":"การใช้ดนตรีอย่างมีเป้าหมายเพื่อส่งเสริมสุขภาวะหรือการบำบัด","id":191},{"cat":"4. ดนตรี","th":"โยฮันน์ เซบาสเตียน บาค","en":"Johann Sebastian Bach","meaning":"คีตกวีสำคัญของยุคบาโรก","id":192},{"cat":"4. ดนตรี","th":"อันโตนิโอ วีวัลดี","en":"Antonio Vivaldi","meaning":"คีตกวีสำคัญของยุคบาโรก","id":193},{"cat":"4. ดนตรี","th":"จอร์จ ฟรีเดอริก ฮันเดล","en":"George Frideric Handel","meaning":"คีตกวีสำคัญของยุคบาโรก","id":194},{"cat":"4. ดนตรี","th":"ฟรานซ์ โจเซฟ ไฮเดิน","en":"Franz Joseph Haydn","meaning":"คีตกวีสำคัญของยุคคลาสสิก","id":195},{"cat":"4. ดนตรี","th":"โวล์ฟกัง อมาเดอุส โมซาร์ท","en":"Wolfgang Amadeus Mozart","meaning":"คีตกวีสำคัญของยุคคลาสสิก","id":196},{"cat":"4. ดนตรี","th":"ลุดวิก ฟาน เบโทเฟน","en":"Ludwig van Beethoven","meaning":"คีตกวีสำคัญช่วงปลายคลาสสิกต่อเนื่องสู่โรแมนติก","id":197},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"วรรณกรรม","en":"Literature","meaning":"งานประพันธ์ที่ใช้ภาษาเป็นสื่อสร้างความคิด อารมณ์ หรือประสบการณ์","id":198},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"ประสบการณ์ทางสุนทรียะ","en":"Aesthetic Experience","meaning":"ประสบการณ์ของความซาบซึ้งหรือการเห็นคุณค่าทางความงาม","id":199},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"วัตถุทางสุนทรียะ","en":"Aesthetic Object","meaning":"สิ่งหรือผลงานที่เป็นเป้าหมายของการรับรู้และประเมินทางสุนทรียะ","id":200},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"องค์ประกอบวรรณกรรม","en":"Elements of Literature","meaning":"ส่วนสำคัญที่ประกอบงานวรรณกรรม เช่น โครงเรื่อง ตัวละคร ฉาก ภาษา และแก่นเรื่อง","id":201},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"โครงเรื่อง","en":"Plot","meaning":"การจัดลำดับเหตุการณ์ของงานวรรณกรรม","id":202},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"ฉันทลักษณ์","en":"Prosody","meaning":"แบบแผนทางเสียง จังหวะ และโครงสร้างของร้อยกรอง","id":203},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"ร้อยแก้ว","en":"Prose","meaning":"งานเขียนที่ไม่บังคับรูปแบบคำประพันธ์หรือฉันทลักษณ์","id":204},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"ร้อยกรอง","en":"Poetry","meaning":"งานประพันธ์ที่มีจังหวะ ภาษา หรือรูปแบบเชิงกวี","id":205},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"บันเทิงคดี","en":"Fiction","meaning":"งานที่สร้างจากจินตนาการหรือเรื่องสมมติเป็นหลัก","id":206},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"สารคดี","en":"Non-fiction","meaning":"งานที่มุ่งนำเสนอข้อเท็จจริงหรือเรื่องจริง","id":207},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"นวนิยาย","en":"Novel","meaning":"บันเทิงคดีร้อยแก้วขนาดยาวที่มีเรื่องและตัวละครพัฒนาอย่างต่อเนื่อง","id":208},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"เรื่องสั้น","en":"Short Story","meaning":"บันเทิงคดีร้อยแก้วขนาดสั้นที่มุ่งเหตุการณ์หรือประเด็นสำคัญ","id":209},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"บทละคร","en":"Drama","meaning":"งานประพันธ์ที่สร้างขึ้นเพื่อการแสดงผ่านตัวละครและบทสนทนา","id":210},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"ชีวประวัติ","en":"Biography","meaning":"งานเขียนที่เล่าชีวิตของบุคคลจริง","id":211},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"คุณค่าทางปัญญา","en":"Intellectual Value","meaning":"คุณค่าที่ทำให้ผู้อ่านเกิดความคิด ความรู้ หรือความเข้าใจ","id":212},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"ร้อยกรองประเภทบรรยาย","en":"Narrative Poetry","meaning":"ร้อยกรองที่มุ่งเล่าเหตุการณ์หรือเรื่องราว","id":213},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"ร้อยกรองประเภทพรรณนาหรือรำพึงรำพัน","en":"Descriptive Poetry","meaning":"ร้อยกรองที่มุ่งพรรณนาภาพ อารมณ์ หรือความรู้สึก","id":214},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"บทกวีรำพึงรำพัน","en":"Lyric Poetry","meaning":"บทกวีที่เน้นถ่ายทอดอารมณ์และความรู้สึกของผู้พูด","id":215},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"ร้อยกรองประเภทบทละคร","en":"Dramatic Poetry","meaning":"ร้อยกรองที่สร้างขึ้นในลักษณะบทละครหรือเสียงของตัวละคร","id":216},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"การอ่านเชิงวิชาการ","en":"Academic Reading","meaning":"การอ่านเพื่อวิเคราะห์สาระ ข้อเท็จจริง เหตุผล และความรู้","id":217},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"การอ่านเชิงสุนทรียะ","en":"Aesthetic Reading","meaning":"การอ่านเพื่อสัมผัสอารมณ์ จินตนาการ ภาษา และคุณค่าความงามของตัวบท","id":218},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"กระบวนการอ่านเชิงสุนทรียะ","en":"Aesthetic Reading Process","meaning":"ขั้นตอนการอ่านที่เปิดรับ สัมผัส ตีความ และประเมินคุณค่าทางสุนทรียะ","id":219},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"การปฏิสัมพันธ์กับตัวบท","en":"Interaction with Text","meaning":"การที่ผู้อ่านตอบสนอง ตีความ และเชื่อมประสบการณ์ของตนกับตัวบท","id":220},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"ศิลปะเพื่อศิลปะ","en":"Art for Art's Sake","meaning":"แนวคิดที่ให้คุณค่าศิลปะในตัวมันเองโดยไม่จำเป็นต้องมีประโยชน์ภายนอก","id":221},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"ความรู้เชิงปัญญา","en":"Intellectual Knowledge","meaning":"ความรู้ที่เกิดจากการคิด วิเคราะห์ เหตุผล และความเข้าใจ","id":222},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"ความรู้เชิงสุนทรียะ","en":"Aesthetic Knowledge","meaning":"ความรู้ที่เกิดจากการรับรู้และเข้าใจคุณค่าความงามหรือศิลปะ","id":223},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"ความรู้เชิงผัสสะ","en":"Sensory Knowledge","meaning":"ความรู้ที่เกิดจากประสบการณ์ของประสาทสัมผัส","id":224},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"ความรู้ที่ไม่ผ่านกระบวนการทางปัญญา","en":"Non-cognitive Knowledge","meaning":"ความรู้ที่ไม่ได้เกิดจากการใช้เหตุผลหรือการคิดวิเคราะห์โดยตรง","id":225},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"ความรู้โดยสัญชาตญาณ","en":"Intuitive Knowledge","meaning":"ความรู้หรือความเข้าใจที่เกิดขึ้นโดยตรงจากสัญชาตญาณ","id":226},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"การรับรู้ทางผัสสะ","en":"Sensory Perception","meaning":"การรับรู้ข้อมูลผ่านประสาทสัมผัส","id":227},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"ประสบการณ์ทางผัสสะ","en":"Sensory Experience","meaning":"ประสบการณ์ที่เกิดจากการเห็น ได้ยิน ได้กลิ่น ลิ้มรส หรือสัมผัส","id":228},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"การเปิดประสบการณ์ทางผัสสะ","en":"Openness to Sensory Experience","meaning":"การเปิดใจรับสิ่งเร้าทางประสาทสัมผัสเพื่อเกิดประสบการณ์และความรู้สึก","id":229},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"การวิเคราะห์เชิงสุนทรียะ","en":"Aesthetic Analysis","meaning":"การพิจารณาองค์ประกอบ รูปแบบ และคุณค่าความงามอย่างมีเหตุผล","id":230},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"ระยะห่างทางจิต","en":"Psychical Distance","meaning":"การเว้นระยะทางอารมณ์จากสิ่งที่รับรู้เพื่อพิจารณาคุณค่าทางสุนทรียะ","id":231},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"การไม่ยึดติดกับความจริง","en":"Detachment from Reality","meaning":"การไม่ผูกการรับรู้งานศิลปะกับความจริงเชิงปฏิบัติทั้งหมด","id":232},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"การประเมินคุณค่า","en":"Evaluation","meaning":"การพิจารณาและตัดสินคุณค่าของงานจากข้อมูลหรือเกณฑ์ที่เกี่ยวข้อง","id":233},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"แนวคิดอัตวิสัย","en":"Subjectivism","meaning":"แนวคิดที่ให้ผู้รับรู้หรือประสบการณ์ส่วนบุคคลเป็นฐานการตัดสินคุณค่า","id":234},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"แนวคิดวัตถุวิสัย","en":"Objectivism","meaning":"แนวคิดที่ให้คุณสมบัติของตัวผลงานเป็นฐานการตัดสินคุณค่า","id":235},{"cat":"5. วรรณกรรมและการอ่านเชิงสุนทรียะ","th":"แนวคิดสัมพัทธนิยม","en":"Relativism","meaning":"แนวคิดที่มองคุณค่าจากความสัมพันธ์ระหว่างตัวงาน ผู้รับรู้ และบริบท","id":236}];
+
+const CHAPTERS = [...new Set(DATA.map(x=>x.cat))];
+const STATE_KEY = "gen67133_exam_trainer_v2";
+
+const CLUSTERS = [
+  ["สุนทรียภาพ","สุนทรียศาสตร์","ความงาม","รสนิยม","อัตวิสัย","วัตถุวิสัย","สัมพัทธนิยม","แนวคิดอัตวิสัย","แนวคิดวัตถุวิสัย","แนวคิดสัมพัทธนิยม"],
+  ["การรับรู้","การรับรู้แบบตั้งใจ","การรับรู้แบบไม่ตั้งใจ","การรับรู้แบบรสนิยม","ผัสสะ","การรับรู้ทางผัสสะ","ประสบการณ์ทางผัสสะ","การเปิดประสบการณ์ทางผัสสะ"],
+  ["วิจิตรศิลป์","ประยุกต์ศิลป์","ศิลปะบำบัด","ศิลปะเพื่อคุณภาพชีวิต","ศิลปะ","Art for Art's Sake"],
+  ["จิตรกรรม","ภาพวาด","ภาพพิมพ์","ประติมากรรม","สถาปัตยกรรม","ศิลปะดิจิทัล","ศิลปะคอลลาจ","สื่อผสม","ภาพถ่าย","งานออกแบบ"],
+  ["เส้น","เส้นตรง","เส้นโค้ง","เส้นแนวตั้ง","เส้นแนวนอน","เส้นทแยง","จุด"],
+  ["รูปร่าง","รูปร่างเรขาคณิต","รูปร่างอิสระ","รูปทรง","รูปทรงเรขาคณิต","รูปทรงอิสระ"],
+  ["น้ำหนักอ่อนแก่","แสงและเงา","สีโทนร้อน","สีโทนเย็น","พื้นผิว","พื้นที่ว่าง","ขนาด","สัดส่วน"],
+  ["เอกภาพ","ความกลมกลืน","ความสมดุล","ความสมดุลแบบสมมาตร","ความสมดุลแบบอสมมาตร","จังหวะทางศิลปะ","การซ้ำ","รูปแบบซ้ำ","ความเคลื่อนไหว","จุดเด่น","ความขัดแย้ง","ความหลากหลาย","การจัดวาง","องค์ประกอบภาพ"],
+  ["การเล่าเรื่อง","เรื่องเล่า","องค์ประกอบการเล่าเรื่อง","โครงเรื่อง","แก่นเรื่อง","ตัวละคร","ตัวละครคงที่","ตัวละครพลวัต","ฉาก","เวลา","สถานที่"],
+  ["ความขัดแย้งระหว่างตัวละครกับตัวละคร","ตัวละครกับตนเอง","ตัวละครกับสังคม","ตัวละครกับธรรมชาติ","ตัวละครกับเหนือธรรมชาติ"],
+  ["มุมมองการเล่าเรื่อง","ผู้เล่าเรื่อง","บุรุษที่หนึ่ง","บุรุษที่สาม"],
+  ["การเปิดเรื่อง","เหตุการณ์ก่อเรื่อง","การดำเนินเรื่อง","จุดวิกฤต","การคลี่คลาย","จบเรื่อง"],
+  ["สื่อจินตคดี","สื่อบนจอ","โสตทัศนศิลป์","สื่อดิจิทัล","สตรีมมิง","ภาพยนตร์","ศิลปะภาพยนตร์","ภาพยนตร์บันเทิงคดี","ภาพยนตร์สารคดี","ละครซีรีส์","โรแมนซ์","เมโลดราม่า","โครงสร้างกึ่งละคร","ศิลปะการแสดง","ละครเวที","บทสนทนา"],
+  ["ภาพระยะไกลมาก","ภาพระยะไกล","ภาพระยะปานกลาง","ภาพระยะใกล้","ภาพระยะใกล้มาก","ขนาดภาพ"],
+  ["มุมระดับสายตา","มุมสูง","มุมต่ำ","มุมเหนือศีรษะ","มุมกล้อง"],
+  ["แพน","ทิลต์","ดอลลี่","แทร็กกิง","การเคลื่อนกล้อง","มีซองแซน"],
+  ["ศฤงคารรส","หาสยรส","กรุณารส","รุทรรส","วีรรส","ภยานกรส","พีภัตสรส","อัพภูตรส","ศานติรส"],
+  ["เสียง","เสียงรบกวน","คลื่นเสียง","ความถี่","ระดับเสียง","เสียงสูง","เสียงต่ำ","ความดังเบา","ความยาวเสียง","สีสันของเสียง"],
+  ["องค์ประกอบดนตรี","จังหวะ","จังหวะเน้น","ทำนอง","เสียงประสาน","คอร์ด","พื้นผิวดนตรี","คีตลักษณ์"],
+  ["โซนาตา","ซิมโฟนี","คอนแชร์โต","สตริงควอเท็ต","โอเปรา","ดนตรีบรรเลง","ดนตรีขับร้อง","ดนตรีสำหรับวงออร์เคสตรา","วงออร์เคสตรา","วงเครื่องสาย","วงดุริยางค์"],
+  ["ดนตรียุคกลาง","ดนตรียุคบาโรก","ดนตรียุคคลาสสิก","ดนตรียุคโรแมนติก","ดนตรีศตวรรษที่ 20","ดนตรีตะวันตก"],
+  ["โยฮันน์ เซบาสเตียน บาค","อันโตนิโอ วีวัลดี","จอร์จ ฟรีเดอริก ฮันเดล","ฟรานซ์ โจเซฟ ไฮเดิน","โวล์ฟกัง อมาเดอุส โมซาร์ท","ลุดวิก ฟาน เบโทเฟน"],
+  ["เพลงโบสถ์","ดิสโก้","ร็อกแอนด์โรล","แจ๊ส","บลูส์","ป๊อป","ภูมิทัศน์เสียง","เสียงธรรมชาติ","เสียงสิ่งแวดล้อม","ดนตรีบำบัด"],
+  ["วรรณกรรม","องค์ประกอบวรรณกรรม","ฉันทลักษณ์","ร้อยแก้ว","ร้อยกรอง","บันเทิงคดี","สารคดี","นวนิยาย","เรื่องสั้น","บทละคร","ชีวประวัติ","ร้อยกรองประเภทบรรยาย","ร้อยกรองประเภทพรรณนาหรือรำพึงรำพัน","บทกวีรำพึงรำพัน","ร้อยกรองประเภทบทละคร"],
+  ["ประสบการณ์ทางสุนทรียะ","วัตถุทางสุนทรียะ","คุณค่าทางปัญญา","การอ่านเชิงวิชาการ","การอ่านเชิงสุนทรียะ","กระบวนการอ่านเชิงสุนทรียะ","การปฏิสัมพันธ์กับตัวบท","ศิลปะเพื่อศิลปะ","ความรู้เชิงปัญญา","ความรู้เชิงสุนทรียะ","ความรู้เชิงผัสสะ","ความรู้ที่ไม่ผ่านกระบวนการทางปัญญา","ความรู้โดยสัญชาตญาณ","การวิเคราะห์เชิงสุนทรียะ","ระยะห่างทางจิต","การไม่ยึดติดกับความจริง","การประเมินคุณค่า"]
+];
+
+let appState = loadState();
+
+function loadState(){
+  try{
+    return JSON.parse(localStorage.getItem(STATE_KEY)) || {vocab:{}};
+  }catch(e){return {vocab:{}}}
+}
+function saveState(){localStorage.setItem(STATE_KEY,JSON.stringify(appState))}
+function shuffle(a){
+  a=[...a];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}
+  return a;
+}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function getItem(id){return DATA.find(x=>x.id===Number(id))}
+function clusterFor(item){
+  const found=CLUSTERS.find(c=>c.includes(item.th) || c.includes(item.en));
+  return found || [];
+}
+function similarPool(item){
+  const cluster=clusterFor(item);
+  let out=[];
+  if(cluster.length){
+    out=DATA.filter(x=>x.cat===item.cat && x.id!==item.id && (cluster.includes(x.th)||cluster.includes(x.en)));
+  }
+  const same=DATA.filter(x=>x.cat===item.cat && x.id!==item.id);
+  for(const x of shuffle(same)) if(!out.some(y=>y.id===x.id)) out.push(x);
+  return out;
+}
+function makeChoices(item,field,count=4){
+  const vals=[item[field]];
+  for(const x of shuffle(similarPool(item))){
+    if(!vals.includes(x[field])) vals.push(x[field]);
+    if(vals.length>=count) break;
+  }
+  if(vals.length<count){
+    for(const x of shuffle(DATA)){
+      if(!vals.includes(x[field])) vals.push(x[field]);
+      if(vals.length>=count) break;
+    }
+  }
+  return shuffle(vals);
+}
+function explainValue(item,field,value){
+  const sameCat=DATA.filter(x=>x.cat===item.cat && x[field]===value);
+  const cand=sameCat[0] || DATA.find(x=>x[field]===value);
+  if(!cand) return "";
+  return cand.meaning;
+}
+function showView(id){
+  document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function goHome(){showView("home")}
+function openAbout(){document.getElementById("aboutModal").classList.add("show")}
+function closeAbout(){document.getElementById("aboutModal").classList.remove("show")}
+
+// ---------- VOCAB MODE ----------
+let vPool=[],vIndex=0,vSessions={};
+function startVocab(){
+  buildVChapter();
+  buildVPool();
+  showView("vocabView");
+  renderVocab();
+}
+function buildVChapter(){
+  const s=document.getElementById("vChapter");
+  if(s.options.length) return;
+  s.innerHTML='<option value="ALL">ทุกบท</option>'+CHAPTERS.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join("");
+  s.onchange=()=>{buildVPool();renderVocab()}
+  document.getElementById("vFilter").onchange=()=>{buildVPool();renderVocab()}
+}
+function buildVPool(){
+  const chap=document.getElementById("vChapter").value||"ALL";
+  const filter=document.getElementById("vFilter").value||"all";
+  let arr=chap==="ALL"?[...DATA]:DATA.filter(x=>x.cat===chap);
+  if(filter==="wrong") arr=arr.filter(x=>appState.vocab[x.id]?.everWrong);
+  if(filter==="englishWrong") arr=arr.filter(x=>appState.vocab[x.id]?.englishWrong);
+  vPool=shuffle(arr);vIndex=0;vSessions={};
+}
+function vocabSession(item){
+  if(!vSessions[item.id]){
+    vSessions[item.id]={thaiChoices:makeChoices(item,"th"),engChoices:makeChoices(item,"en"),thai:null,eng:null,checked:false};
+  }
+  return vSessions[item.id];
+}
+function renderChoiceButtons(container,values,selected,correct,checked,field){
+  const letters=["A","B","C","D","E"];
+  container.innerHTML=values.map((v,i)=>{
+    let cls="choice";
+    if(selected===v) cls+=" selected";
+    if(checked && v===correct) cls+=" correct";
+    if(checked && selected===v && v!==correct) cls+=" wrong";
+    return `<button class="${cls}" onclick="chooseV('${field}',${i})"><span class="letter">${letters[i]}</span><span>${esc(v)}</span></button>`;
+  }).join("");
+}
+function chooseV(field,i){
+  const item=vPool[vIndex]; if(!item)return;
+  const s=vocabSession(item); if(s.checked)return;
+  const arr=field==="thai"?s.thaiChoices:s.engChoices;
+  s[field]=arr[i];renderVocab();
+}
+function renderVocab(){
+  const item=vPool[vIndex];
+  if(!item){
+    document.getElementById("vMeta").textContent="";
+    document.getElementById("vPrompt").textContent="ไม่มีข้อในชุดนี้";
+    document.getElementById("vThaiChoices").innerHTML="";
+    document.getElementById("vEngChoices").innerHTML="";
+    document.getElementById("vPos").textContent="0/0";
+    document.getElementById("vBar").style.width="0%";
+    return;
+  }
+  const s=vocabSession(item);
+  document.getElementById("vMeta").textContent=item.cat;
+  document.getElementById("vPrompt").textContent=item.meaning;
+  renderChoiceButtons(document.getElementById("vThaiChoices"),s.thaiChoices,s.thai,item.th,s.checked,"thai");
+  renderChoiceButtons(document.getElementById("vEngChoices"),s.engChoices,s.eng,item.en,s.checked,"eng");
+  document.getElementById("vPos").textContent=`${vIndex+1}/${vPool.length}`;
+  document.getElementById("vBar").style.width=`${((vIndex+1)/Math.max(vPool.length,1))*100}%`;
+  const records=Object.values(appState.vocab||{});
+  document.getElementById("vBoth").textContent=records.filter(x=>x.bothCorrect).length;
+  document.getElementById("vThai").textContent=records.filter(x=>x.thaiCorrect).length;
+  document.getElementById("vEng").textContent=records.filter(x=>x.engCorrect).length;
+  renderVFeedback(item,s);
+}
+function renderVFeedback(item,s){
+  const box=document.getElementById("vFeedback");
+  if(!s.checked){box.className="feedback";box.innerHTML="";return}
+  const thOk=s.thai===item.th,enOk=s.eng===item.en,both=thOk&&enOk;
+  box.className=`feedback show ${both?"good":"bad"}`;
+  const uniques=[];
+  for(const v of s.thaiChoices){
+    if(!uniques.some(x=>x.label===v)) uniques.push({label:v,meaning:explainValue(item,"th",v)});
+  }
+  for(const v of s.engChoices){
+    if(!uniques.some(x=>x.label===v)) uniques.push({label:v,meaning:explainValue(item,"en",v)});
+  }
+  box.innerHTML=`<h4>${both?"ถูกทั้งสองชุด":"ยังมีจุดที่ต้องจำ"}</h4>
+    <p>คำตอบที่ตรงที่สุดคือ <b>${esc(item.th)}</b> = <b>${esc(item.en)}</b></p>
+    <div class="explainGrid">${uniques.map(x=>`<div class="explainItem"><b>${esc(x.label)}</b><span>${esc(x.meaning||"ใช้เทียบตามบริบทของบทเรียน")}</span></div>`).join("")}</div>`;
+}
+function checkVocab(){
+  const item=vPool[vIndex]; if(!item)return;
+  const s=vocabSession(item);
+  if(!s.thai||!s.eng){alert("เลือกทั้งคำไทยและคำอังกฤษก่อนตรวจ");return}
+  s.checked=true;
+  const thOk=s.thai===item.th,enOk=s.eng===item.en;
+  const rec=appState.vocab[item.id]||{};
+  rec.attempts=(rec.attempts||0)+1;
+  rec.thaiCorrect=thOk;rec.engCorrect=enOk;rec.bothCorrect=thOk&&enOk;
+  rec.everWrong=rec.everWrong || !(thOk&&enOk);
+  rec.englishWrong=rec.englishWrong || !enOk;
+  if(enOk && rec.attempts>1) rec.englishWrong=false;
+  appState.vocab[item.id]=rec;saveState();renderVocab();
+}
+function retryCurrentVocab(){
+  const item=vPool[vIndex];if(!item)return;
+  vSessions[item.id]={thaiChoices:makeChoices(item,"th"),engChoices:makeChoices(item,"en"),thai:null,eng:null,checked:false};
+  renderVocab();
+}
+function vNext(){if(vIndex<vPool.length-1){vIndex++;renderVocab()}}
+function vPrev(){if(vIndex>0){vIndex--;renderVocab()}}
+function shuffleVocabPool(){vPool=shuffle(vPool);vIndex=0;vSessions={};renderVocab()}
+function resetVocabProgress(){
+  if(!confirm("ล้างสถิติคำศัพท์ของเครื่องนี้ทั้งหมดหรือไม่?"))return;
+  appState.vocab={};saveState();renderVocab();
+}
+
+// ---------- MATCHING ----------
+let matchSet=[];
+function startMatching(){showView("matchView");newMatchingSet()}
+function makeBank(cat,targets,size){
+  const catItems=DATA.filter(x=>x.cat===cat);
+  const ids=new Set(targets.map(x=>x.id));
+  let bank=[...targets];
+  // prioritize terms similar to targets
+  let cand=[];
+  for(const t of targets){
+    for(const x of similarPool(t)) if(x.cat===cat && !ids.has(x.id) && !cand.some(y=>y.id===x.id)) cand.push(x);
+  }
+  for(const x of shuffle(catItems)) if(!ids.has(x.id)&&!cand.some(y=>y.id===x.id)) cand.push(x);
+  for(const x of cand){
+    if(!bank.some(y=>y.th===x.th)) bank.push(x);
+    if(bank.length>=size) break;
+  }
+  return shuffle(bank);
+}
+function newMatchingSet(){
+  matchSet=CHAPTERS.map((cat,ci)=>{
+    const catItems=shuffle(DATA.filter(x=>x.cat===cat));
+    const targets=catItems.slice(0,4);
+    const bankSize=ci%2===0?15:14;
+    return {cat,targets,bank:makeBank(cat,targets,bankSize),answers:{},checked:false};
+  });
+  renderMatching();
+}
+function renderMatching(){
+  const host=document.getElementById("matchSections");
+  host.innerHTML=matchSet.map((sec,si)=>{
+    return `<section class="matchSection">
+      <div class="matchHead"><h3>${esc(sec.cat)}</h3><span>4 ข้อ · คลัง ${sec.bank.length} คำ</span></div>
+      <div class="bank">${sec.bank.map(x=>`<span class="bankChip">${esc(x.th)}</span>`).join("")}</div>
+      <div class="matchRows">
+        ${sec.targets.map((q,qi)=>{
+          const ans=sec.answers[qi]||"";
+          const isChecked=sec.checked;
+          const ok=ans===String(q.id);
+          let result="";
+          if(isChecked){
+            const chosen=getItem(ans);
+            result=ok
+              ? `<div class="rowResult good">ถูก — <b>${esc(q.th)}</b> = ${esc(q.en)}</div>`
+              : `<div class="rowResult bad">คุณเลือก <b>${chosen?esc(chosen.th):"—"}</b>${chosen?` — ${esc(chosen.meaning)}`:""}<br>คำตอบที่ตรงที่สุดคือ <b>${esc(q.th)}</b> = ${esc(q.en)} — ${esc(q.meaning)}</div>`;
+          }
+          return `<div class="matchRow ${isChecked?"checked":""}">
+            <div class="matchNum">${qi+1}</div>
+            <div class="matchMeaning">${esc(q.meaning)}</div>
+            <select class="matchSelect" onchange="setMatchAnswer(${si},${qi},this.value)" ${isChecked?"disabled":""}>
+              <option value="">เลือกคำศัพท์</option>
+              ${sec.bank.map(x=>`<option value="${x.id}" ${ans===String(x.id)?"selected":""}>${esc(x.th)}</option>`).join("")}
+            </select>
+            ${result}
+          </div>`;
+        }).join("")}
+      </div>
+      <div style="padding:0 14px 12px"><button class="glossaryToggle" onclick="toggleGlossary(${si})">ดูความหมายคลังคำทั้งหมด</button></div>
+      <div class="glossary" id="gloss${si}"><div class="glossaryGrid">${sec.bank.map(x=>`<div class="glossaryItem"><b>${esc(x.th)} · ${esc(x.en)}</b><span>${esc(x.meaning)}</span></div>`).join("")}</div></div>
+    </section>`;
+  }).join("");
+  updateMatchAnswered();
+}
+function setMatchAnswer(si,qi,val){
+  matchSet[si].answers[qi]=val;
+  updateMatchAnswered();
+}
+function updateMatchAnswered(){
+  let n=0;for(const s of matchSet) n+=Object.values(s.answers).filter(Boolean).length;
+  document.getElementById("matchAnswered").textContent=`ตอบแล้ว ${n}/20`;
+}
+function toggleGlossary(si){document.getElementById("gloss"+si).classList.toggle("show")}
+function checkMatching(){
+  let answered=0;for(const s of matchSet) answered+=Object.values(s.answers).filter(Boolean).length;
+  if(answered<20 && !confirm(`ตอนนี้ตอบ ${answered}/20 ข้อ ต้องการตรวจเลยหรือไม่?`))return;
+  let correct=0;
+  matchSet.forEach(s=>{s.checked=true;s.targets.forEach((q,qi)=>{if(s.answers[qi]===String(q.id))correct++})});
+  renderMatching();
+  const score=(correct*0.25).toFixed(2);
+  document.getElementById("matchSummary").innerHTML=`<div class="resultHero"><strong>${correct}/20</strong><span>คิดเป็น ${score}/5 คะแนนในส่วนจับคู่</span></div>`;
+}
+
+// ---------- MOCK ----------
+let mock={part1:[],part2:[],a1:{},a2:{},submitted:false};
+function startMock(){showView("mockView");newMock()}
+function newMock(){
+  const byCat=CHAPTERS.map(c=>shuffle(DATA.filter(x=>x.cat===c)).slice(0,4)).flat();
+  const part1=shuffle(byCat).map(q=>({q,choices:makeChoices(q,"th")}));
+  const part2=CHAPTERS.map(cat=>{
+    const targets=shuffle(DATA.filter(x=>x.cat===cat)).slice(0,4);
+    return {cat,targets,bank:makeBank(cat,targets,15)};
+  });
+  mock={part1,part2,a1:{},a2:{},submitted:false};
+  renderMock();showMockPart(1);
+}
+function renderMock(){
+  document.getElementById("mockPart1").innerHTML=mock.part1.map((o,i)=>`<div class="mockQ">
+    <h4>${i+1}. ${esc(o.q.meaning)}</h4>
+    <div class="mockOptions">${o.choices.map((v,j)=>`<button class="mockOption ${mock.a1[i]===v?"sel":""}" onclick="pickMock1(${i},${j})">${String.fromCharCode(65+j)}. ${esc(v)}</button>`).join("")}</div>
+  </div>`).join("");
+
+  let html2="";
+  let n=20;
+  mock.part2.forEach((sec,si)=>{
+    let rows="";
+    sec.targets.forEach((q,qi)=>{
+      const key=`${si}-${qi}`;
+      const ans=mock.a2[key]||"";
+      rows += `<div class="matchRow">
+        <div class="matchNum">${n+qi+1}</div>
+        <div class="matchMeaning">${esc(q.meaning)}</div>
+        <select class="matchSelect" onchange="pickMock2(${si},${qi},this.value)">
+          <option value="">เลือกคำศัพท์</option>
+          ${sec.bank.map(x=>`<option value="${x.id}" ${ans===String(x.id)?"selected":""}>${esc(x.th)}</option>`).join("")}
+        </select>
+      </div>`;
+    });
+    html2 += `<div class="matchSection">
+      <div class="matchHead"><h3>${esc(sec.cat)}</h3><span>ข้อ ${n+1}–${n+4}</span></div>
+      <div class="bank">${sec.bank.map(x=>`<span class="bankChip">${esc(x.th)}</span>`).join("")}</div>
+      <div class="matchRows">${rows}</div>
+    </div>`;
+    n += 4;
+  });
+  document.getElementById("mockPart2").innerHTML=html2;
+
+  updateMockAnswered();
+  document.getElementById("mockResult").innerHTML="";
+}
+function pickMock1(i,j){mock.a1[i]=mock.part1[i].choices[j];renderMock()}
+function pickMock2(si,qi,val){mock.a2[`${si}-${qi}`]=val;updateMockAnswered()}
+function updateMockAnswered(){
+  const n1=Object.values(mock.a1).filter(Boolean).length;
+  const n2=Object.values(mock.a2).filter(Boolean).length;
+  document.getElementById("mockAnswered").textContent=`ตอบแล้ว ${n1+n2}/40`;
+}
+function showMockPart(p){
+  document.getElementById("mockPart1").classList.toggle("hidden",p!==1);
+  document.getElementById("mockPart2").classList.toggle("hidden",p!==2);
+  document.getElementById("tab1").classList.toggle("active",p===1);
+  document.getElementById("tab2").classList.toggle("active",p===2);
+  window.scrollTo({top:120,behavior:"smooth"});
+}
+function submitMock(){
+  const answered=Object.values(mock.a1).filter(Boolean).length+Object.values(mock.a2).filter(Boolean).length;
+  if(answered<40 && !confirm(`ตอบแล้ว ${answered}/40 ข้อ ต้องการส่งเลยหรือไม่?`))return;
+  let c1=0,c2=0,review=[];
+  mock.part1.forEach((o,i)=>{
+    const ans=mock.a1[i];
+    if(ans===o.q.th)c1++; else review.push({n:i+1,q:o.q,chosen:ans||"ไม่ได้ตอบ"});
+  });
+  let n=20;
+  mock.part2.forEach((sec,si)=>{
+    sec.targets.forEach((q,qi)=>{
+      const ans=mock.a2[`${si}-${qi}`];
+      if(ans===String(q.id))c2++; else {
+        const ch=getItem(ans);
+        review.push({n:n+qi+1,q,chosen:ch?ch.th:"ไม่ได้ตอบ"});
+      }
+    });n+=4;
+  });
+  const total=(c1+c2)*0.25;
+  document.getElementById("mockResult").innerHTML=`<div class="resultHero"><strong>${c1+c2}/40</strong><span>ตอนที่ 1: ${c1}/20 · ตอนที่ 2: ${c2}/20 · คิดเป็น ${total.toFixed(2)}/10 คะแนน</span></div>
+  <div class="reviewList">${review.slice(0,20).map(r=>`<div class="reviewItem"><b>ข้อ ${r.n} · ${esc(r.q.th)} = ${esc(r.q.en)}</b><p>${esc(r.q.meaning)}<br>คำตอบของคุณ: ${esc(r.chosen)}</p></div>`).join("")}</div>
+  ${review.length>20?`<div class="notice">มีข้อผิดทั้งหมด ${review.length} ข้อ แสดง 20 ข้อแรกเพื่อให้หน้าจอไม่ยาวเกินไป</div>`:""}`;
+  mock.submitted=true;
+  window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"});
+}
+
+
+// ---------- GLOSSARY ----------
+function startGlossary(){
+  buildGlossaryChapter();
+  showView("glossaryView");
+  renderGlossary();
+}
+function buildGlossaryChapter(){
+  const s=document.getElementById("gChapter");
+  if(!s || s.options.length) return;
+  s.innerHTML='<option value="ALL">ทุกบท</option>'+CHAPTERS.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join("");
+}
+function filteredGlossary(){
+  const q=(document.getElementById("gSearch")?.value||"").trim().toLowerCase();
+  const chap=document.getElementById("gChapter")?.value||"ALL";
+  const sort=document.getElementById("gSort")?.value||"source";
+  let arr=DATA.filter(x=>chap==="ALL"||x.cat===chap);
+  if(q){
+    arr=arr.filter(x=>[x.th,x.en,x.meaning,x.cat].some(v=>String(v).toLowerCase().includes(q)));
+  }
+  if(sort==="thai") arr=[...arr].sort((a,b)=>a.th.localeCompare(b.th,"th"));
+  if(sort==="eng") arr=[...arr].sort((a,b)=>a.en.localeCompare(b.en,"en"));
+  return arr;
+}
+function renderGlossary(){
+  const arr=filteredGlossary();
+  const body=document.getElementById("gTableBody");
+  const mobile=document.getElementById("gMobileCards");
+  const empty=document.getElementById("gEmpty");
+  if(!body||!mobile) return;
+  document.getElementById("gCount").textContent=`${arr.length} รายการ`;
+  empty.classList.toggle("hidden",arr.length>0);
+
+  let lastCat="";
+  let rows="";
+  for(const x of arr){
+    if((document.getElementById("gSort")?.value||"source")==="source" && x.cat!==lastCat){
+      rows+=`<tr><td colspan="3" style="background:#f8f6fc;font-weight:700;color:#554e63;padding:10px 14px">${esc(x.cat)}</td></tr>`;
+      lastCat=x.cat;
+    }
+    rows+=`<tr>
+      <td class="termCell"><b>${esc(x.th)}</b><small>${esc(x.cat)}</small></td>
+      <td><b>${esc(x.en)}</b><span class="sourceBadge">คำมาตรฐานสำหรับฝึก</span></td>
+      <td>${esc(x.meaning)}</td>
+    </tr>`;
+  }
+  body.innerHTML=rows;
+
+  mobile.innerHTML=arr.map(x=>`<article class="termCard">
+    <h3>${esc(x.th)}</h3>
+    <div class="eng">${esc(x.en)}</div>
+    <p>${esc(x.meaning)}</p>
+    <small>${esc(x.cat)}</small>
+  </article>`).join("");
+}
+function glossaryTSV(){
+  const arr=filteredGlossary();
+  return ["ศัพท์\tความหมายภาษาอังกฤษ\tนิยาม\tบทเรียน",
+    ...arr.map(x=>[x.th,x.en,x.meaning,x.cat].join("\t"))
+  ].join("\n");
+}
+async function copyGlossary(){
+  const txt=glossaryTSV();
+  try{
+    await navigator.clipboard.writeText(txt);
+    alert("คัดลอกตารางที่กำลังแสดงแล้ว");
+  }catch(e){
+    const ta=document.createElement("textarea");
+    ta.value=txt;document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();
+    alert("คัดลอกตารางที่กำลังแสดงแล้ว");
+  }
+}
+function csvEscape(v){
+  v=String(v??"").replace(/"/g,'""');
+  return `"${v}"`;
+}
+function exportGlossaryCSV(){
+  const arr=filteredGlossary();
+  const rows=[
+    ["ศัพท์","ความหมายภาษาอังกฤษ","นิยาม","บทเรียน"],
+    ...arr.map(x=>[x.th,x.en,x.meaning,x.cat])
+  ];
+  const csv="\uFEFF"+rows.map(r=>r.map(csvEscape).join(",")).join("\r\n");
+  const blob=new Blob([csv],{type:"text/csv;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download="GEN67-133_ตารางรวมคำศัพท์.csv";document.body.appendChild(a);a.click();a.remove();
+  URL.revokeObjectURL(url);
+}
+
+
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeAbout()});
+</script>
+</body>
+</html>
